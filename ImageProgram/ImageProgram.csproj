@@ -52,6 +52,7 @@
     <Compile Include="ImageProgram.Designer.cs">
       <DependentUpon>ImageProgram.cs</DependentUpon>
     </Compile>
+    <Compile Include="IModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ImageProgram.resx">

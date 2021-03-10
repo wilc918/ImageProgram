@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace ImageProgram
 {
-    public partial class ImageProgram : Form
+    public partial class CollectionForm : Form
     {
-        public ImageProgram()
+        public CollectionForm()
         {
             InitializeComponent();
         }
