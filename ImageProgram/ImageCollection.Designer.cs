@@ -31,7 +31,7 @@ namespace ImageProgram
         {
             this.NextImageButton = new System.Windows.Forms.Button();
             this.PreviousImageButton = new System.Windows.Forms.Button();
-            this.LoadImageButton = new System.Windows.Forms.Button();
+            this.AddImageButton = new System.Windows.Forms.Button();
             this.PictureDisplay = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.PictureDisplay)).BeginInit();
             this.SuspendLayout();
@@ -44,6 +44,7 @@ namespace ImageProgram
             this.NextImageButton.TabIndex = 0;
             this.NextImageButton.Text = ">";
             this.NextImageButton.UseVisualStyleBackColor = true;
+            this.NextImageButton.Click += new System.EventHandler(this.ImageCollection_Next);
             // 
             // PreviousImageButton
             // 
@@ -53,15 +54,17 @@ namespace ImageProgram
             this.PreviousImageButton.TabIndex = 1;
             this.PreviousImageButton.Text = "<";
             this.PreviousImageButton.UseVisualStyleBackColor = true;
+            this.PreviousImageButton.Click += new System.EventHandler(this.ImageCollection_Previous);
             // 
-            // LoadImageButton
+            // AddImageButton
             // 
-            this.LoadImageButton.Location = new System.Drawing.Point(201, 398);
-            this.LoadImageButton.Name = "LoadImageButton";
-            this.LoadImageButton.Size = new System.Drawing.Size(100, 40);
-            this.LoadImageButton.TabIndex = 2;
-            this.LoadImageButton.Text = "Load";
-            this.LoadImageButton.UseVisualStyleBackColor = true;
+            this.AddImageButton.Location = new System.Drawing.Point(201, 398);
+            this.AddImageButton.Name = "AddImageButton";
+            this.AddImageButton.Size = new System.Drawing.Size(100, 40);
+            this.AddImageButton.TabIndex = 2;
+            this.AddImageButton.Text = "Add Image!";
+            this.AddImageButton.UseVisualStyleBackColor = true;
+            this.AddImageButton.Click += new System.EventHandler(this.ImageCollection_AddImage);
             // 
             // PictureDisplay
             // 
@@ -77,11 +80,12 @@ namespace ImageProgram
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(500, 450);
             this.Controls.Add(this.PictureDisplay);
-            this.Controls.Add(this.LoadImageButton);
+            this.Controls.Add(this.AddImageButton);
             this.Controls.Add(this.PreviousImageButton);
             this.Controls.Add(this.NextImageButton);
             this.Name = "ImageCollection";
             this.Text = "Gallery";
+            this.Load += new System.EventHandler(this.ImageCollection_Load);
             ((System.ComponentModel.ISupportInitialize)(this.PictureDisplay)).EndInit();
             this.ResumeLayout(false);
 
@@ -91,7 +95,7 @@ namespace ImageProgram
 
         private System.Windows.Forms.Button NextImageButton;
         private System.Windows.Forms.Button PreviousImageButton;
-        private System.Windows.Forms.Button LoadImageButton;
+        private System.Windows.Forms.Button AddImageButton;
         private System.Windows.Forms.PictureBox PictureDisplay;
     }
 }

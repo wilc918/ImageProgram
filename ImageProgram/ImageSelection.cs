@@ -10,11 +10,16 @@ using System.Windows.Forms;
 
 namespace ImageProgram
 {
-    public partial class ImageCollection : Form
+    public partial class ImageSelection : Form
     {
-        public ImageCollection()
+        public ImageSelection()
         {
             InitializeComponent();
+        }
+
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

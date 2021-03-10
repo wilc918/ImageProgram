@@ -16,7 +16,7 @@ namespace ImageProgram
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new CollectionForm());
+            Application.Run(new ImageCollection());
         }
     }
 }
