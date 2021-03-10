@@ -46,6 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Factory.cs" />
+    <Compile Include="ImageData.cs" />
+    <Compile Include="Controller.cs" />
     <Compile Include="ImageSelection.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -59,6 +62,9 @@
       <DependentUpon>ImageCollection.cs</DependentUpon>
     </Compile>
     <Compile Include="IModel.cs" />
+    <Compile Include="IFactory.cs" />
+    <Compile Include="IImageData.cs" />
+    <Compile Include="IDataElement.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ImageSelection.resx">

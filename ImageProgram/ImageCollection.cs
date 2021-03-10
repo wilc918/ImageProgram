@@ -10,6 +10,12 @@ using System.Windows.Forms;
 
 namespace ImageProgram
 {
+    /// <summary>
+    /// Class - This class represents the ImageCollection form.
+    /// 
+    /// (Calum Wilkinson)
+    /// (10/03/2021)
+    /// </summary>
     public partial class ImageCollection : Form
     {
         //DECLARE a to store image collection in:

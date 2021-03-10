@@ -16,7 +16,9 @@ namespace ImageProgram
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ImageCollection());
+            //Instantiate a new controller object of type Controller inside the variable controller.
+            Controller controller = new Controller();
+            //Application.Run(new ImageCollection());
         }
     }
 }
