@@ -11,6 +11,12 @@ using System.Windows.Forms;
 
 namespace ImageProgram
 {
+    /// <summary>
+    /// Class - Contains all methods and attributes relevant to imageSelection form.
+    /// 
+    /// (Calum Wilkinson)
+    /// (11/03/2021)
+    /// </summary>
     public partial class ImageSelection : Form
     {
         // DECLARE a string to store path for images on close button, call it _imagePath:
@@ -47,17 +53,22 @@ namespace ImageProgram
             fillList(_imageNames);
         }
 
-        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            
-        }
-
+        /// <summary>
+        /// Method - Dispose of the Form.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void closeForm(object sender, EventArgs e)
         {
             //Disposes of this instance of ImageSelection
-            
+            this.Dispose();
         }
 
+        /// <summary>
+        /// Method - loads selected images into collection
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void collectImages(object sender, EventArgs e) 
         {
             //Create a list for selected items
@@ -76,21 +87,12 @@ namespace ImageProgram
         }
 
         /// <summary>
-        /// This method fills the selection of the list.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ImageSelection_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        /// <summary>
         /// Fills the list with image names from the FishAssets folder
         /// </summary>
         /// <param name="listItems">the items to go in the list</param>
         private void fillList(IList<String> listItems) 
         {
+            //Loop through the amount of items, adding their file name and their file path to the listView.
             for (int i = 0; i < listItems.Count; i++)
             {
                 ListViewItem otem = new ListViewItem(Path.GetFileName(listItems[i]));

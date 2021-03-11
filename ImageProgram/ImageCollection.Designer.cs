@@ -85,7 +85,6 @@ namespace ImageProgram
             this.Controls.Add(this.NextImageButton);
             this.Name = "ImageCollection";
             this.Text = "Gallery";
-            this.Load += new System.EventHandler(this.ImageCollection_Load);
             ((System.ComponentModel.ISupportInitialize)(this.PictureDisplay)).EndInit();
             this.ResumeLayout(false);
 

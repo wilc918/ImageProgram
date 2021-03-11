@@ -8,6 +8,9 @@ namespace ImageProgram
 {
     /// <summary>
     /// Class - For producing and keeping track of factories.
+    /// 
+    /// (Calum Wilkinson)
+    /// (11/03/2021)
     /// </summary>
     public class FactoryLocator : IServiceLocator
     {

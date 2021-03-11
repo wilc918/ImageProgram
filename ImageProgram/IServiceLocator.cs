@@ -6,13 +6,18 @@ using System.Threading.Tasks;
 
 namespace ImageProgram
 {
+    /// <summary>
+    /// Interface - IServiceLocator 
+    /// Author (Calum Wilkinson)
+    /// Version (10/03/2020)
+    /// </summary>
     public interface IServiceLocator
     {
         /// <summary>
-        /// Produces a factory for the type given.
+        /// Interface - For Get<T>() Method
         /// </summary>
-        /// <typeparam name="T">Type: Interface or class required</typeparam>
-        /// <returns>A factory for the given class or interface</returns>
+        /// <typeparam name="T">The type associated with the class</typeparam>
+        /// <returns></returns>
         IService Get<T>() where T : class;
     }
 }

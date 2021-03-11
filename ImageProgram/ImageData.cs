@@ -30,12 +30,8 @@ namespace ImageProgram
 
         public ImageData()
         {
-            //_data = new Dictionary<int, DataElement>();
-            //_imageNames = new List<String>(Directory.GetFiles(_imagePath));
-
+            //Instantiate _displayData as a Dictionary<string, string>
             _displayData = new Dictionary<string, string>();
-
-            //load(_imageNames);
         }
 
         #region Implementation of IImageData

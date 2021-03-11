@@ -26,13 +26,7 @@ namespace ImageProgram
             //Instantiate an ImageData to store all the imageData in, store it as IImagedata and call it imageData:
             IImageData imageData = (factoryLocator.Get<IImageData>() as IFactory<IImageData>).Create<ImageData>();
 
-
-           // IImageData imageData = IFactory<IImageData>.create<ImageData>();
-           //IFactory<IImageData> dataFactory = 
-
-
-
-
+            // Run the ImageCollectionForm with imageData injected
             Application.Run(new ImageCollection(imageData));
         }
 

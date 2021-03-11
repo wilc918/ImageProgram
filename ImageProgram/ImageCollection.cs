@@ -32,9 +32,6 @@ namespace ImageProgram
         //DECLARE an int to store the value for the next imageKey, call it _imageKey, set to 0:
         int _imageKey = 0;
 
-        // DECLARE an int to act as a circular counter index into _imageNames:
-        private int _cCounter = 0;
-
         //DECLARE a List<String> to contain the names of the images in the gallery, call it galleryImagesNames
         private IList<String> _galleryImageNames;
 
@@ -57,11 +54,6 @@ namespace ImageProgram
             //_ModelData.load(_galleryImageNames);
         }
 
-        private void ImageCollection_Load(object sender, EventArgs e)
-        {
-            //PictureDisplay.Image = Image.FromFile("..\\..\\FishAssets\\Urchin.png");
-
-        }
 
         /// <summary>
         /// Method - Launch the ImageSelection Form so that the user may choose what images to add to their collection.
@@ -134,23 +126,6 @@ namespace ImageProgram
                 //Code to retrieve image name using imagekey.
                 PictureDisplay.Image = _ModelData.getImage(_galleryImageNames[_imageKey], PictureDisplay.Width, PictureDisplay.Height);
             }
-        }
-
-
-        /// <summary>
-        /// Method to control image file (as a Blob) that is instantiated as part of a note.
-        /// </summary>
-        /// <param name="maxValue">The total number of image files in use</param>
-        /// <returns></returns>
-        private int CircularCounter(int maxValue)
-        { 
-            _cCounter++;
-            if (_cCounter == maxValue || _cCounter < 0)
-            {
-                _cCounter = 0;
-            }
-           
-            return _cCounter;
         }
         #endregion
     }

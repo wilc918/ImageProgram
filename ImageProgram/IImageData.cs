@@ -9,6 +9,9 @@ namespace ImageProgram
 {
     /// <summary>
     /// Interface - Provides access to methods related to the addition and removal of image data.
+    /// 
+    /// Author (Calum Wilkinson)
+    /// Version (10/03/2020)
     /// </summary>
     public interface IImageData
     {
