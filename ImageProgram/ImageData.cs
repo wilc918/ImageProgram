@@ -56,6 +56,16 @@ namespace ImageProgram
         {
         
         }
+        
+        /// <summary>
+        /// Method - Getter, retrieve _imageNames list.
+        /// </summary>
+        /// <returns>Names of images</returns>
+        public IList<String> GetCollectionList()
+        {
+            //Return ImageNames
+            return _imageNames;
+        }
         #endregion
 
         #region Implementing IModel
@@ -93,24 +103,6 @@ namespace ImageProgram
         public Image getImage(String key, int frameWidth, int frameHeight) {
             //By entering the file name, which is our key for our dictionary, we should get the full path.
             return Bitmap.FromFile(Path.GetFullPath(_displayData[key]));
-        }
-        #endregion
-
-        #region Private Methods
-        /// <summary>
-        /// Method - to allow for cycling through the images after we grab them in bulk
-        /// </summary>
-        /// <param name="maxCount">The total number of files grabbed</param>
-        /// <returns></returns>
-        private int CircularCounter(int maxCount)
-        {
-            _cCounter++;
-            if (_cCounter == maxCount)
-            {
-                _cCounter = 0;
-            }
-            return _cCounter;
-
         }
         #endregion
     }

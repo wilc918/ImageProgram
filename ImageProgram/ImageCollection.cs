@@ -32,8 +32,11 @@ namespace ImageProgram
         //DECLARE an int to store the value for the next imageKey, call it _imageKey, set to 0:
         int _imageKey = 0;
 
+        // DECLARE an int to act as a circular counter index into _imageNames:
+        private int _cCounter = 0;
+
         //DECLARE a List<String> to contain the names of the images in the gallery, call it galleryImagesNames
-        private List<String> _galleryImageNames;
+        private IList<String> _galleryImageNames;
 
         /// <summary>
         /// CONSTRUCTOR - ImageCollection Form Object Constructor
@@ -82,10 +85,18 @@ namespace ImageProgram
         /// <param name="e"></param>
         private void ImageCollection_Next(object sender, EventArgs e) 
         {
-            //Code to increment
-            _imageKey++;
-            //Code to retrieve image name using imagekey.
-            PictureDisplay.Image = _ModelData.getImage("Urchin.png", PictureDisplay.Width, PictureDisplay.Height);
+            if (_galleryImageNames != null)
+            {
+                if (_imageKey < (_galleryImageNames.Count - 1)) 
+                {
+                    //Increment key number
+                    _imageKey++;
+                }
+                
+            }
+                
+            //Load Image
+            ImageLoad();
         }
 
         /// <summary>
@@ -95,16 +106,52 @@ namespace ImageProgram
         /// <param name="e"></param>
         private void ImageCollection_Previous(object sender, EventArgs e) 
         {
-            //Code to decrement
-            _imageKey--;
-            //
-            System.Diagnostics.Debug.WriteLine("List item : " + );
-            //Code to retrieve image name using imagekey.
-            PictureDisplay.Image = _ModelData.getImage("Urchin.png", PictureDisplay.Width, PictureDisplay.Height);
+
+            
+                if (_imageKey != 0)
+                {
+                    _imageKey--;
+                }
+
+                //Load Image
+                ImageLoad();
+            
         }
 
-        private void ImageCollection_Display() {
-            // Code to display image using image name
+        #region Private Methods
+
+        /// <summary>
+        /// Loads an image according path associated with the _imageKey
+        /// </summary>
+        private void ImageLoad() 
+        {
+
+            //retrieveImageList
+            _galleryImageNames = _imageData.GetCollectionList();
+            
+            if (_galleryImageNames != null) 
+            {
+                //Code to retrieve image name using imagekey.
+                PictureDisplay.Image = _ModelData.getImage(_galleryImageNames[_imageKey], PictureDisplay.Width, PictureDisplay.Height);
+            }
         }
+
+
+        /// <summary>
+        /// Method to control image file (as a Blob) that is instantiated as part of a note.
+        /// </summary>
+        /// <param name="maxValue">The total number of image files in use</param>
+        /// <returns></returns>
+        private int CircularCounter(int maxValue)
+        { 
+            _cCounter++;
+            if (_cCounter == maxValue || _cCounter < 0)
+            {
+                _cCounter = 0;
+            }
+           
+            return _cCounter;
+        }
+        #endregion
     }
 }

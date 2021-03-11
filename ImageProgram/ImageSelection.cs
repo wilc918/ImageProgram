@@ -55,42 +55,24 @@ namespace ImageProgram
         private void closeForm(object sender, EventArgs e)
         {
             //Disposes of this instance of ImageSelection
-            this.Dispose();
+            
         }
 
         private void collectImages(object sender, EventArgs e) 
         {
-
-            /*for (var i = 0; i > listView1.SelectedItems.Count; i++) 
-            {
-                System.Diagnostics.Debug.WriteLine(i);
-                //Log the selected items
-                String text = listView1.SelectedItems[i].Text;
-                String text2 = listView1.SelectedItems[i].SubItems[1].Text;
-                System.Diagnostics.Debug.WriteLine("Name " + text + "Path" + text2);
-            }*/
-            //String text = listView1.SelectedItems[0].Text;
-            //String text2 = listView1.SelectedItems[0].SubItems[1].Text;
-            //System.Diagnostics.Debug.WriteLine("Name " + text + "Path" + text2);
-
+            //Create a list for selected items
             _selectedItems = new List<string>();
+
+            //loop through the selected items from ListView
             for (int i = 0; i < listView1.SelectedItems.Count; i++)
             {
-
-                System.Diagnostics.Debug.WriteLine("List item : " + listView1.SelectedItems[i].SubItems[1].Text);
+                //Add the paths to the list
                 _selectedItems.Add(listView1.SelectedItems[i].SubItems[1].Text);
             }
-
-            
-
-            
+            //Load them into data
             _ModelData.load(_selectedItems);
-
-            /*for (int i = 0; i < _imageNames.Count; i++)
-            {
-                System.Diagnostics.Debug.WriteLine("List item : " + _imageNames[i] + "File Name : " + Path.GetFileName(_imageNames[i]));
-            }*/
-
+            //Close the form
+            this.Dispose();
         }
 
         /// <summary>
