@@ -10,7 +10,7 @@ namespace ImageProgram
     /// <summary>
     /// Interface - Provides access to methods related to the addition and removal of image data.
     /// </summary>
-    interface IImageData
+    public interface IImageData
     {
         /// <summary>
         /// Method - Adds Item To List

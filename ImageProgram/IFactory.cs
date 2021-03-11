@@ -13,7 +13,7 @@ namespace ImageProgram
     /// (10/03/2021)
     /// </summary>
     /// <typeparam name="E">E is the interface used for instantiating an object, must be compatible with the class</typeparam>
-    public interface IFactory<E>
+    public interface IFactory<E> : IService
     {
         /// <summary>
         /// Instantiate the class of T where interface E applies. E is described when the factory is called.

@@ -14,7 +14,7 @@ namespace ImageProgram
     /// (Calum Wilkinson)
     /// (10/03/2021)
     /// </summary>
-    class ImageData : IModel
+    class ImageData : IModel, IImageData
     {
         //DECLARE a string to store the path for images, call it _imagePath:
         private const string _imagePath = "..\\..\\FishAssets\\";
@@ -32,6 +32,27 @@ namespace ImageProgram
         {
             //_data = new Dictionary<int, DataElement>();
         }
+
+        #region Implementation of IImageData
+        /// <summary>
+        /// Add Item to dictionary
+        /// </summary>
+        /// <param name="Key">Key for identification</param>
+        public void AddItem(int Key) 
+        { 
+            // Does Nothing at the moment
+        }
+
+        /// <summary>
+        /// Remove Item from dictionary
+        /// </summary>
+        /// <param name="Key">Key for identification</param>
+        public void RemoveItem(int Key) 
+        {
+        
+        }
+        #endregion
+
         #region Implementing IModel
         /// <summary>
         /// Load the media items pointed to by 'pathfilenames' into the 'Model'

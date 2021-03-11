@@ -20,13 +20,20 @@ namespace ImageProgram
         /// CONSTRUCTOR - runs the ImageCollection Application.
         /// </summary>
         public Controller() {
+            //Instantiate a factory locator:
+            IServiceLocator factoryLocator = new FactoryLocator();
 
-           // IImageData imageData = ();
+            //Instantiate an ImageData to store all the imageData in, store it as IImagedata and call it imageData:
+            IImageData imageData = (factoryLocator.Get<IImageData>() as IFactory<IImageData>).Create<ImageData>();
+
+
+           // IImageData imageData = IFactory<IImageData>.create<ImageData>();
+           //IFactory<IImageData> dataFactory = 
 
 
 
 
-            Application.Run(new ImageCollection());
+            Application.Run(new ImageCollection(imageData));
         }
 
 

@@ -20,8 +20,11 @@ namespace ImageProgram
     {
         //DECLARE a to store image collection in:
 
-        // DECLARE an IModel to access ImageData, call it _ModelData:
+        // DECLARE an IModel to access ModelStuff call it _ModelData:
         private IModel _ModelData;
+
+        // DECLARE an IModel to access ImageData, call it _ModelData:
+        private IImageData _imageData;
 
         //DECLARE an int to store the value for the next imageKey, call it _imageKey, set to 0:
         int _imageKey = 0;
@@ -29,9 +32,16 @@ namespace ImageProgram
         /// <summary>
         /// CONSTRUCTOR - ImageCollection Form Object Constructor
         /// </summary>
-        public ImageCollection()
+        /// <param name="ImageData">Data about images</param>
+        public ImageCollection(IImageData ImageData)
         {
             InitializeComponent();
+
+            //Instantiate _imageData, casting ImageData as the type IImageData:
+            _imageData = ImageData as IImageData;
+
+            //Instantiate _ModelData, casting ImageData as the type IModel:
+            _ModelData = ImageData as IModel;
         }
 
         private void ImageCollection_Load(object sender, EventArgs e)
