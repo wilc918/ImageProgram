@@ -62,7 +62,7 @@ namespace ImageProgram
 
             for (int i = 0; i < _imageNames.Count; i++)
             {
-                System.Diagnostics.Debug.WriteLine("List item : " + _imageNames[i]);
+                System.Diagnostics.Debug.WriteLine("List item : " + _imageNames[i] + "File Name : " + Path.GetFileName(_imageNames[i]));
             }
 
         }
