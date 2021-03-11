@@ -77,8 +77,10 @@ namespace ImageProgram
                 }
             }
 
+            _imageNames = new List<String>(_displayData.Keys);
+
             //We return the full list of keys, that we can loop through to get the file names
-            return new List<String>(_displayData.Keys);
+            return _imageNames;
         }
 
         /// <summary>

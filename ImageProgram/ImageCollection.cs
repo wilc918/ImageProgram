@@ -23,7 +23,7 @@ namespace ImageProgram
         // DECLARE an IModel to access ModelStuff call it _ModelData:
         private IModel _ModelData;
 
-        // DECLARE an IModel to access ImageData, call it _ModelData:
+        // DECLARE an IImageData to access ImageData, call it _imageData:
         private IImageData _imageData;
 
         // DECLARE a form for ImageSelection, call it _imageSelectForm:
@@ -49,9 +49,9 @@ namespace ImageProgram
             //Instantiate _ModelData, casting ImageData as the type IModel:
             _ModelData = ImageData as IModel;
 
-            _galleryImageNames = new List<string>();
-            _galleryImageNames.Add("..\\..\\FishAssets\\Urchin.png");
-            _ModelData.load(_galleryImageNames);
+            //_galleryImageNames = new List<string>();
+            //_galleryImageNames.Add("..\\..\\FishAssets\\Urchin.png");
+            //_ModelData.load(_galleryImageNames);
         }
 
         private void ImageCollection_Load(object sender, EventArgs e)
@@ -70,7 +70,7 @@ namespace ImageProgram
             //Code to launch second form, but only if there isn't already one existing.
             if (_imageSelectForm == null || _imageSelectForm.IsDisposed)
             {
-                _imageSelectForm = new ImageSelection();
+                _imageSelectForm = new ImageSelection(_imageData);
                 _imageSelectForm.Show();
             }
         }
@@ -97,6 +97,8 @@ namespace ImageProgram
         {
             //Code to decrement
             _imageKey--;
+            //
+            System.Diagnostics.Debug.WriteLine("List item : " + );
             //Code to retrieve image name using imagekey.
             PictureDisplay.Image = _ModelData.getImage("Urchin.png", PictureDisplay.Width, PictureDisplay.Height);
         }

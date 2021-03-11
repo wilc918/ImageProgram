@@ -24,5 +24,11 @@ namespace ImageProgram
         /// <param name="Key">Used to identify item</param>
         void RemoveItem(int Key);
 
+        /// <summary>
+        /// Method - Retrieves the imageList.
+        /// </summary>
+        /// <returns>List of images for the gallery</returns>
+        IList<String> GetCollectionList();
+
     }
 }
