@@ -20,7 +20,8 @@ namespace ImageProgram
     {
         //DECLARE a to store image collection in:
 
-        //DECLARE a IDictionary to store new images in, call it _images
+        // DECLARE an IModel to access ImageData, call it _ModelData:
+        private IModel _ModelData;
 
         //DECLARE an int to store the value for the next imageKey, call it _imageKey, set to 0:
         int _imageKey = 0;
@@ -51,6 +52,7 @@ namespace ImageProgram
         {
             //Code to increment
             _imageKey++;
+            System.Diagnostics.Debug.WriteLine("This is a log");
         }
 
         private void ImageCollection_Previous(object sender, EventArgs e) 

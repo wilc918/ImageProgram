@@ -20,7 +20,7 @@ namespace ImageProgram
         /// </summary>
         /// <param name="text">Text</param>
         /// <param name="image">Image</param>
-        void Initialise(String text, Image image);
+        void Initialise(Image image);
 
         /// <summary>
         /// Retrieve the image.

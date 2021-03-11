@@ -21,6 +21,11 @@ namespace ImageProgram
         /// </summary>
         public Controller() {
 
+           // IImageData imageData = ();
+
+
+
+
             Application.Run(new ImageCollection());
         }
 

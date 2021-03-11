@@ -7,13 +7,22 @@ using System.Threading.Tasks;
 
 namespace ImageProgram
 {
+    /// <summary>
+    /// Interface - Provides access to methods related to the addition and removal of image data.
+    /// </summary>
     interface IImageData
     {
         /// <summary>
-        /// Retrieve an image associate with the imageKey
+        /// Method - Adds Item To List
         /// </summary>
-        /// <param name="imageKey">Key used for parsing dictionary</param>
-        /// <returns>The Image associated with the key</returns>
-        Image RetrieveImage(int imageKey);
+        /// <param name="Key">Used to identify item</param>
+       void AddItem(int Key);
+
+        /// <summary>
+        /// Method - Removes Item From List
+        /// </summary>
+        /// <param name="Key">Used to identify item</param>
+        void RemoveItem(int Key);
+
     }
 }

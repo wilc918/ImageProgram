@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 
-namespace COMP3304Assessment
+namespace ImageProgram
 {
-    interface IModel
+    public interface IModel
     {
         /// <summary>
         /// Load the media items pointed to by 'pathfilenames' into the 'Model'

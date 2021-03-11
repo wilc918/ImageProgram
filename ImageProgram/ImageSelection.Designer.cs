@@ -30,8 +30,6 @@ namespace ImageProgram
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("Text to see where");
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("hgmmhg", "(none)");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ImageSelection));
             this.listView1 = new System.Windows.Forms.ListView();
             this.ColumnName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -49,15 +47,11 @@ namespace ImageProgram
             this.ColumnPath,
             this.ColumnIcon});
             this.listView1.HideSelection = false;
-            this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem3,
-            listViewItem4});
             this.listView1.Location = new System.Drawing.Point(68, 37);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(271, 287);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
             this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
             // 
             // ColumnName
@@ -96,6 +90,7 @@ namespace ImageProgram
             this.AddSelectionButton.TabIndex = 1;
             this.AddSelectionButton.Text = "Add Selections";
             this.AddSelectionButton.UseVisualStyleBackColor = true;
+            this.AddSelectionButton.Click += new System.EventHandler(this.collectImages);
             // 
             // ReturnToCollectionButton
             // 
@@ -105,6 +100,7 @@ namespace ImageProgram
             this.ReturnToCollectionButton.TabIndex = 2;
             this.ReturnToCollectionButton.Text = "Return to Gallery";
             this.ReturnToCollectionButton.UseVisualStyleBackColor = true;
+            this.ReturnToCollectionButton.Click += new System.EventHandler(this.closeForm);
             // 
             // ImageSelection
             // 
@@ -116,6 +112,7 @@ namespace ImageProgram
             this.Controls.Add(this.listView1);
             this.Name = "ImageSelection";
             this.Text = "Add images to gallery..";
+            this.Load += new System.EventHandler(this.ImageSelection_Load);
             this.ResumeLayout(false);
 
         }

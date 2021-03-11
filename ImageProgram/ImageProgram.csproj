@@ -46,6 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataElement.cs" />
+    <Compile Include="Delegates.cs" />
     <Compile Include="Factory.cs" />
     <Compile Include="ImageData.cs" />
     <Compile Include="Controller.cs" />
