@@ -14,7 +14,7 @@ namespace ImageProgram
     /// Class - This class represents the ImageCollection form.
     /// 
     /// (Calum Wilkinson)
-    /// (10/03/2021)
+    /// (15/04/2021)
     /// </summary>
     public partial class ImageCollection : Form
     {
@@ -37,6 +37,8 @@ namespace ImageProgram
 
         //DECLARE a Dictionary<int, DataElement> to store images in, call it _images:
         private IDictionary<int, Image> _images;
+
+        //DECLARE a Dictionary<int, DataElement> to store images in, call it _images:
 
         // DECLARE an int to act as a circular counter index into _images:
         private int _cCounter = 0;
@@ -72,12 +74,7 @@ namespace ImageProgram
         /// <param name="e"></param>
         private void ImageCollection_AddImage(object sender, EventArgs e)
         {
-            //Code to launch second form, but only if there isn't already one existing.
-            if (_imageSelectForm == null || _imageSelectForm.IsDisposed)
-            {
-                _imageSelectForm = new ImageSelection(_imageData);
-                _imageSelectForm.Show();
-            }
+
         }
 
         /// <summary>
@@ -87,23 +84,22 @@ namespace ImageProgram
         /// <param name="e"></param>
         private void ImageCollection_Next(object sender, EventArgs e) 
         {
-            _imageKey = CircularAdder(_images.Count, 1);
-            PictureDisplay.Image = _images[_imageKey];
-
-            /*
-            if (_galleryImageNames != null)
+            
+            if (_images.Count > 0)
             {
-
-
+                _imageKey = CircularAdder(_images.Count, 1);
+                PictureDisplay.Image = _images[_imageKey];
+                /*
                 if (_imageKey < (_galleryImageNames.Count - 1)) 
                 {
                     //Increment key number
                     _imageKey++;
                     PictureDisplay.Image = _images[_imageKey];
                 }
-                
-            }*/
-                
+                */
+
+            }
+
             //Load Image
             //ImageLoad();
         }
@@ -116,28 +112,30 @@ namespace ImageProgram
         private void ImageCollection_Previous(object sender, EventArgs e) 
         {
 
-            _imageKey = CircularAdder(_images.Count, -1);
-            PictureDisplay.Image = _images[_imageKey];
+            if (_images.Count > 0)
+            {
+                _imageKey = CircularAdder(_images.Count, -1);
+                PictureDisplay.Image = _images[_imageKey];
 
-            /*
-            if (_imageKey != 0)
-                {
+
+                /*
                     _imageKey--;
 
                     PictureDisplay.Image = _images[_imageKey];
-                 }*/
+                */
+            }
 
             //Load Image
             //ImageLoad();
 
         }
 
-        #region Private Methods
+            #region Private Methods
 
-        /// <summary>
-        /// Loads an image according path associated with the _imageKey
-        /// </summary>
-        private void ImageLoad() 
+            /// <summary>
+            /// Loads an image according path associated with the _imageKey
+            /// </summary>
+            private void ImageLoad() 
         {
 
             //retrieveImageList
@@ -152,19 +150,27 @@ namespace ImageProgram
         }
         #endregion
 
+        /// <summary>
+        /// Adds images to the collection, only one at a time.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddImagesButton_Click(object sender, EventArgs e)
         {
+            //Open File Dialog enables the user to choose files from file explorer.
             OpenFileDialog galleryFile = new OpenFileDialog();
 
+            // This filter ensures that only .jpgs and .pngs are allowed
             galleryFile.Filter = "Choose Image(*.jpg;*.png)|*.jpg;*.png;";
-
+            
+            //If the user presses OK on the file explorer
             if (galleryFile.ShowDialog() == DialogResult.OK) 
             {
                 //PictureDisplay.Image = Image.FromFile(galleryFile.FileName);
                 //_ModelData.load(_selectedItems);
-                _images.Add(_imageKey, Image.FromFile(galleryFile.FileName));
-                PictureDisplay.Image = _images[_imageKey];
-                _imageKey++;
+                _images.Add(_images.Count, Image.FromFile(galleryFile.FileName));
+                PictureDisplay.Image = _images[_images.Count-1];
+                //_imageKey++;
 
             }
         }
