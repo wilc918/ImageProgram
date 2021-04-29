@@ -7,6 +7,12 @@ using System.Drawing;
 
 namespace ImageProgram
 {
+    /// <summary>
+    /// Enforce the implmentation of methods related to the loading and retrieval of data files.
+    /// 
+    ///(Calum Wilkinson)
+    /// Version (10/04/2021)
+    /// </summary>
     public interface IModel
     {
         /// <summary>

@@ -33,6 +33,7 @@ namespace ImageProgram
             this.PreviousImageButton = new System.Windows.Forms.Button();
             this.AddImageButton = new System.Windows.Forms.Button();
             this.PictureDisplay = new System.Windows.Forms.PictureBox();
+            this.AddImagesButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.PictureDisplay)).BeginInit();
             this.SuspendLayout();
             // 
@@ -58,7 +59,7 @@ namespace ImageProgram
             // 
             // AddImageButton
             // 
-            this.AddImageButton.Location = new System.Drawing.Point(201, 398);
+            this.AddImageButton.Location = new System.Drawing.Point(152, 398);
             this.AddImageButton.Name = "AddImageButton";
             this.AddImageButton.Size = new System.Drawing.Size(100, 40);
             this.AddImageButton.TabIndex = 2;
@@ -74,11 +75,22 @@ namespace ImageProgram
             this.PictureDisplay.TabIndex = 3;
             this.PictureDisplay.TabStop = false;
             // 
+            // AddImagesButton
+            // 
+            this.AddImagesButton.Location = new System.Drawing.Point(270, 398);
+            this.AddImagesButton.Name = "AddImagesButton";
+            this.AddImagesButton.Size = new System.Drawing.Size(100, 40);
+            this.AddImagesButton.TabIndex = 4;
+            this.AddImagesButton.Text = "Add new Image";
+            this.AddImagesButton.UseVisualStyleBackColor = true;
+            this.AddImagesButton.Click += new System.EventHandler(this.AddImagesButton_Click);
+            // 
             // ImageCollection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(500, 450);
+            this.Controls.Add(this.AddImagesButton);
             this.Controls.Add(this.PictureDisplay);
             this.Controls.Add(this.AddImageButton);
             this.Controls.Add(this.PreviousImageButton);
@@ -96,5 +108,6 @@ namespace ImageProgram
         private System.Windows.Forms.Button PreviousImageButton;
         private System.Windows.Forms.Button AddImageButton;
         private System.Windows.Forms.PictureBox PictureDisplay;
+        private System.Windows.Forms.Button AddImagesButton;
     }
 }

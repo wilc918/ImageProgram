@@ -25,13 +25,17 @@ namespace ImageProgram
         //DECLARE a Dictionary<int,DataElement> to store images to be displayed in, call it _displayData:
         private IDictionary<string, string> _displayData;
 
-        //DECLARE an int to act as a circular counter index into _imageNames:
-        private int _cCounter = 0;
+        // DECLARE a Disctionary<int,DataElement> to store all data in, call it _data:
+        private IDictionary<int, DataElement> _data;
+
 
         public ImageData()
         {
             //Instantiate _displayData as a Dictionary<string, string>
             _displayData = new Dictionary<string, string>();
+
+            // Instantiate _data:
+            _data = new Dictionary<int, DataElement>();
         }
 
         #region Implementation of IImageData
@@ -40,8 +44,12 @@ namespace ImageProgram
         /// </summary>
         /// <param name="Key">Key for identification</param>
         public void AddItem(int Key) 
-        { 
-            // Does Nothing at the moment
+        {
+            // Create DataElement, call it element:
+            //DataElement element = new DataElement();
+
+            // Store image into element
+            //element.Initialise(Bitmap.FromFile);
         }
 
         /// <summary>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,11 +24,15 @@ namespace ImageProgram
             //Instantiate a factory locator:
             IServiceLocator factoryLocator = new FactoryLocator();
 
+            //Instantiate a Dictionary<int, Image> for the program gallery to store its images in, store it as an IDictionary and call it galleryItems:
+            // IDictionary<int, Image> galleryItems = new Dictionary<int, Image>();
+            IDictionary<int, Image> galleryItems = (factoryLocator.Get<IDictionary<int, Image>>() as IFactory<IDictionary<int, Image>>).Create<Dictionary<int, Image>>();
+
             //Instantiate an ImageData to store all the imageData in, store it as IImagedata and call it imageData:
             IImageData imageData = (factoryLocator.Get<IImageData>() as IFactory<IImageData>).Create<ImageData>();
 
             // Run the ImageCollectionForm with imageData injected
-            Application.Run(new ImageCollection(imageData));
+            Application.Run(new ImageCollection(imageData, galleryItems));
         }
 
 
