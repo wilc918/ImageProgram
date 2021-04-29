@@ -39,6 +39,7 @@ namespace ImageProgram
         private IDictionary<int, Image> _images;
 
         //DECLARE a Dictionary<int, DataElement> to store images in, call it _images:
+        private IDictionary<int, PictureBox> _pictureBoxes;
 
         // DECLARE an int to act as a circular counter index into _images:
         private int _cCounter = 0;
@@ -48,7 +49,7 @@ namespace ImageProgram
         /// CONSTRUCTOR - ImageCollection Form Object Constructor
         /// </summary>
         /// <param name="ImageData">Data about images</param>
-        public ImageCollection(IImageData ImageData, IDictionary<int, Image> imageContainer)
+        public ImageCollection(IImageData ImageData, IDictionary<int, Image> imageContainer, IDictionary<int, PictureBox> pictureBoxContainer)
         {
             InitializeComponent();
 
@@ -61,21 +62,18 @@ namespace ImageProgram
             //Instantiate images Dictionary
             _images = imageContainer;
 
+            _pictureBoxes = pictureBoxContainer;
+
+           _pictureBoxes[0] = PictureDisplay1;
+           _pictureBoxes[1] = PictureDisplay2;
+           _pictureBoxes[2] = PictureDisplay3;
+
             //_galleryImageNames = new List<string>();
             //_galleryImageNames.Add("..\\..\\FishAssets\\Urchin.png");
             //_ModelData.load(_galleryImageNames);
         }
 
-
-        /// <summary>
-        /// Method - Launch the ImageSelection Form so that the user may choose what images to add to their collection.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ImageCollection_AddImage(object sender, EventArgs e)
-        {
-
-        }
+        
 
         /// <summary>
         /// Method - Retrieve and display the next image in the collection
@@ -88,7 +86,7 @@ namespace ImageProgram
             if (_images.Count > 0)
             {
                 _imageKey = CircularAdder(_images.Count, 1);
-                PictureDisplay.Image = _images[_imageKey];
+                PictureDisplay1.Image = _images[_imageKey];
                 /*
                 if (_imageKey < (_galleryImageNames.Count - 1)) 
                 {
@@ -115,7 +113,12 @@ namespace ImageProgram
             if (_images.Count > 0)
             {
                 _imageKey = CircularAdder(_images.Count, -1);
-                PictureDisplay.Image = _images[_imageKey];
+                /*
+                for (int i = 0; i < 9; i++) 
+                {
+                    PictureDisplay[i]
+                }*/
+                PictureDisplay1.Image = _images[_imageKey];
 
 
                 /*
@@ -144,7 +147,7 @@ namespace ImageProgram
             if (_galleryImageNames != null) 
             {
                 //Code to retrieve image name using imagekey.
-                PictureDisplay.Image = _ModelData.getImage(_galleryImageNames[_imageKey], PictureDisplay.Width, PictureDisplay.Height);
+                PictureDisplay1.Image = _ModelData.getImage(_galleryImageNames[_imageKey], PictureDisplay1.Width, PictureDisplay1.Height);
                 //PictureDisplay.Image = _images[_imageKey];
             }
         }
@@ -162,14 +165,15 @@ namespace ImageProgram
 
             // This filter ensures that only .jpgs and .pngs are allowed
             galleryFile.Filter = "Choose Image(*.jpg;*.png)|*.jpg;*.png;";
-            
+            galleryFile.Title = "Add image to gallery";
+
             //If the user presses OK on the file explorer
             if (galleryFile.ShowDialog() == DialogResult.OK) 
             {
                 //PictureDisplay.Image = Image.FromFile(galleryFile.FileName);
                 //_ModelData.load(_selectedItems);
                 _images.Add(_images.Count, Image.FromFile(galleryFile.FileName));
-                PictureDisplay.Image = _images[_images.Count-1];
+                PictureDisplay1.Image = _images[_images.Count-1];
                 //_imageKey++;
 
             }

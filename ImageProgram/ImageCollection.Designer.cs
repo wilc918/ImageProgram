@@ -31,10 +31,25 @@ namespace ImageProgram
         {
             this.NextImageButton = new System.Windows.Forms.Button();
             this.PreviousImageButton = new System.Windows.Forms.Button();
-            this.AddImageButton = new System.Windows.Forms.Button();
-            this.PictureDisplay = new System.Windows.Forms.PictureBox();
+            this.PictureDisplay1 = new System.Windows.Forms.PictureBox();
             this.AddImagesButton = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureDisplay)).BeginInit();
+            this.PictureDisplay2 = new System.Windows.Forms.PictureBox();
+            this.PictureDisplay3 = new System.Windows.Forms.PictureBox();
+            this.PictureDisplay4 = new System.Windows.Forms.PictureBox();
+            this.PictureDisplay5 = new System.Windows.Forms.PictureBox();
+            this.PictureDisplay6 = new System.Windows.Forms.PictureBox();
+            this.PictureDisplay7 = new System.Windows.Forms.PictureBox();
+            this.PictureDisplay8 = new System.Windows.Forms.PictureBox();
+            this.PictureDisplay9 = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureDisplay1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureDisplay2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureDisplay3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureDisplay4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureDisplay5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureDisplay6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureDisplay7)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureDisplay8)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureDisplay9)).BeginInit();
             this.SuspendLayout();
             // 
             // NextImageButton
@@ -57,27 +72,18 @@ namespace ImageProgram
             this.PreviousImageButton.UseVisualStyleBackColor = true;
             this.PreviousImageButton.Click += new System.EventHandler(this.ImageCollection_Previous);
             // 
-            // AddImageButton
+            // PictureDisplay1
             // 
-            this.AddImageButton.Location = new System.Drawing.Point(152, 398);
-            this.AddImageButton.Name = "AddImageButton";
-            this.AddImageButton.Size = new System.Drawing.Size(100, 40);
-            this.AddImageButton.TabIndex = 2;
-            this.AddImageButton.Text = "Add Image!";
-            this.AddImageButton.UseVisualStyleBackColor = true;
-            this.AddImageButton.Click += new System.EventHandler(this.ImageCollection_AddImage);
-            // 
-            // PictureDisplay
-            // 
-            this.PictureDisplay.Location = new System.Drawing.Point(13, 13);
-            this.PictureDisplay.Name = "PictureDisplay";
-            this.PictureDisplay.Size = new System.Drawing.Size(475, 365);
-            this.PictureDisplay.TabIndex = 3;
-            this.PictureDisplay.TabStop = false;
+            this.PictureDisplay1.Location = new System.Drawing.Point(12, 12);
+            this.PictureDisplay1.Name = "PictureDisplay1";
+            this.PictureDisplay1.Size = new System.Drawing.Size(123, 101);
+            this.PictureDisplay1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PictureDisplay1.TabIndex = 3;
+            this.PictureDisplay1.TabStop = false;
             // 
             // AddImagesButton
             // 
-            this.AddImagesButton.Location = new System.Drawing.Point(270, 398);
+            this.AddImagesButton.Location = new System.Drawing.Point(203, 398);
             this.AddImagesButton.Name = "AddImagesButton";
             this.AddImagesButton.Size = new System.Drawing.Size(100, 40);
             this.AddImagesButton.TabIndex = 4;
@@ -85,19 +91,106 @@ namespace ImageProgram
             this.AddImagesButton.UseVisualStyleBackColor = true;
             this.AddImagesButton.Click += new System.EventHandler(this.AddImagesButton_Click);
             // 
+            // PictureDisplay2
+            // 
+            this.PictureDisplay2.Location = new System.Drawing.Point(194, 12);
+            this.PictureDisplay2.Name = "PictureDisplay2";
+            this.PictureDisplay2.Size = new System.Drawing.Size(123, 101);
+            this.PictureDisplay2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PictureDisplay2.TabIndex = 5;
+            this.PictureDisplay2.TabStop = false;
+            // 
+            // PictureDisplay3
+            // 
+            this.PictureDisplay3.Location = new System.Drawing.Point(365, 12);
+            this.PictureDisplay3.Name = "PictureDisplay3";
+            this.PictureDisplay3.Size = new System.Drawing.Size(123, 101);
+            this.PictureDisplay3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PictureDisplay3.TabIndex = 6;
+            this.PictureDisplay3.TabStop = false;
+            // 
+            // PictureDisplay4
+            // 
+            this.PictureDisplay4.Location = new System.Drawing.Point(12, 145);
+            this.PictureDisplay4.Name = "PictureDisplay4";
+            this.PictureDisplay4.Size = new System.Drawing.Size(123, 101);
+            this.PictureDisplay4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PictureDisplay4.TabIndex = 7;
+            this.PictureDisplay4.TabStop = false;
+            // 
+            // PictureDisplay5
+            // 
+            this.PictureDisplay5.Location = new System.Drawing.Point(194, 145);
+            this.PictureDisplay5.Name = "PictureDisplay5";
+            this.PictureDisplay5.Size = new System.Drawing.Size(123, 101);
+            this.PictureDisplay5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PictureDisplay5.TabIndex = 8;
+            this.PictureDisplay5.TabStop = false;
+            // 
+            // PictureDisplay6
+            // 
+            this.PictureDisplay6.Location = new System.Drawing.Point(365, 145);
+            this.PictureDisplay6.Name = "PictureDisplay6";
+            this.PictureDisplay6.Size = new System.Drawing.Size(123, 101);
+            this.PictureDisplay6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PictureDisplay6.TabIndex = 9;
+            this.PictureDisplay6.TabStop = false;
+            // 
+            // PictureDisplay7
+            // 
+            this.PictureDisplay7.Location = new System.Drawing.Point(12, 264);
+            this.PictureDisplay7.Name = "PictureDisplay7";
+            this.PictureDisplay7.Size = new System.Drawing.Size(123, 101);
+            this.PictureDisplay7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PictureDisplay7.TabIndex = 10;
+            this.PictureDisplay7.TabStop = false;
+            // 
+            // PictureDisplay8
+            // 
+            this.PictureDisplay8.Location = new System.Drawing.Point(194, 264);
+            this.PictureDisplay8.Name = "PictureDisplay8";
+            this.PictureDisplay8.Size = new System.Drawing.Size(123, 101);
+            this.PictureDisplay8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PictureDisplay8.TabIndex = 11;
+            this.PictureDisplay8.TabStop = false;
+            // 
+            // PictureDisplay9
+            // 
+            this.PictureDisplay9.Location = new System.Drawing.Point(365, 264);
+            this.PictureDisplay9.Name = "PictureDisplay9";
+            this.PictureDisplay9.Size = new System.Drawing.Size(123, 101);
+            this.PictureDisplay9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PictureDisplay9.TabIndex = 12;
+            this.PictureDisplay9.TabStop = false;
+            // 
             // ImageCollection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(500, 450);
+            this.Controls.Add(this.PictureDisplay9);
+            this.Controls.Add(this.PictureDisplay8);
+            this.Controls.Add(this.PictureDisplay7);
+            this.Controls.Add(this.PictureDisplay6);
+            this.Controls.Add(this.PictureDisplay5);
+            this.Controls.Add(this.PictureDisplay4);
+            this.Controls.Add(this.PictureDisplay3);
+            this.Controls.Add(this.PictureDisplay2);
             this.Controls.Add(this.AddImagesButton);
-            this.Controls.Add(this.PictureDisplay);
-            this.Controls.Add(this.AddImageButton);
+            this.Controls.Add(this.PictureDisplay1);
             this.Controls.Add(this.PreviousImageButton);
             this.Controls.Add(this.NextImageButton);
             this.Name = "ImageCollection";
-            this.Text = "Gallery";
-            ((System.ComponentModel.ISupportInitialize)(this.PictureDisplay)).EndInit();
+            this.Text = "CollectionView";
+            ((System.ComponentModel.ISupportInitialize)(this.PictureDisplay1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureDisplay2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureDisplay3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureDisplay4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureDisplay5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureDisplay6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureDisplay7)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureDisplay8)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureDisplay9)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -106,8 +199,15 @@ namespace ImageProgram
 
         private System.Windows.Forms.Button NextImageButton;
         private System.Windows.Forms.Button PreviousImageButton;
-        private System.Windows.Forms.Button AddImageButton;
-        private System.Windows.Forms.PictureBox PictureDisplay;
+        private System.Windows.Forms.PictureBox PictureDisplay1;
         private System.Windows.Forms.Button AddImagesButton;
+        private System.Windows.Forms.PictureBox PictureDisplay2;
+        private System.Windows.Forms.PictureBox PictureDisplay3;
+        private System.Windows.Forms.PictureBox PictureDisplay4;
+        private System.Windows.Forms.PictureBox PictureDisplay5;
+        private System.Windows.Forms.PictureBox PictureDisplay6;
+        private System.Windows.Forms.PictureBox PictureDisplay7;
+        private System.Windows.Forms.PictureBox PictureDisplay8;
+        private System.Windows.Forms.PictureBox PictureDisplay9;
     }
 }
