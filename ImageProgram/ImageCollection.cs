@@ -138,6 +138,19 @@ namespace ImageProgram
 
             }
 
+            if (_images.Count > 9)
+            {
+                /*_setKey = _setKey + 9;
+
+                   for (int i = 0; i < 9; i++) 
+                   {
+                     _pictureBoxes[i].Image = _images[i + _setKey];
+                     //Debug.WriteLine("PDIsp: " + _pictureBoxes[i].Image);
+                     Debug.WriteLine("PDIsp: " + _images[i].Tag);
+                 }*/
+
+            }
+
             //Load Image
             //ImageLoad();
         }
@@ -153,6 +166,7 @@ namespace ImageProgram
             if (_images.Count > 0)
             {
                 _imageKey = CircularAdder(_images.Count, -1);
+
                 /*
                 for (int i = 0; i < 9; i++) 
                 {
@@ -169,15 +183,15 @@ namespace ImageProgram
 
             if (_images.Count > 9)
             {
-               /* _setKey--;
+                /*_setKey = _setKey - 9;
 
-                  for (int i = 0; i < 9; i++) 
-                  {
-                    _pictureBoxes[i].Image = _images[i - 9];
-                    //Debug.WriteLine("PDIsp: " + _pictureBoxes[i].Image);
-                    Debug.WriteLine("PDIsp: " + _images[i].Tag);
-                }*/
-                
+                   for (int i = 0; i < 9; i++) 
+                   {
+                     _pictureBoxes[i].Image = _images[i + _setKey];
+                     //Debug.WriteLine("PDIsp: " + _pictureBoxes[i].Image);
+                     Debug.WriteLine("PDIsp: " + _images[i].Tag);
+                 }*/
+
             }
 
             //Load Image
@@ -232,9 +246,11 @@ namespace ImageProgram
                 foreach (KeyValuePair<int, Image> entry in _images) 
                 {
                     //if associated picture box is empty then insert image
-                        //_pictureBoxes[entry.Key].ImageLocation = _images[entry.Key];
+                    //_pictureBoxes[entry.Key].ImageLocation = _images[entry.Key];
+                    if (entry.Key < 9) {
                         _pictureBoxes[entry.Key].Image = _images[entry.Key];
                         Debug.WriteLine("ImageNum: " + entry.Key + entry.Value);
+                    }
                     
                        // Debug.WriteLine("No more picture boxes for " + entry.Key + " " + entry.Value + "!");
                     
