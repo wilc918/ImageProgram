@@ -79,7 +79,7 @@ namespace ImageProgram
                 Debug.WriteLine(i +" " + _pictureBoxes[i].Name);
             }
 
-
+            Debug.WriteLine("PBCount: " + _pictureBoxes.Count);
             //Problem is that picture boxes aren't in any ordered list, how do I know that it won't add the same box?
             /*for (int i = 0; i < 10; i++) {
                 //_pictureBoxes.Add(i, );
@@ -97,22 +97,22 @@ namespace ImageProgram
                 //Debug.WriteLine("ImageNum: " + entry.Key);
             }*/
 
-           /* _pictureBoxes[0] = PictureDisplay1;
-           _pictureBoxes[1] = PictureDisplay2;
-           _pictureBoxes[2] = PictureDisplay3;
-            _pictureBoxes[3] = PictureDisplay4;
-            _pictureBoxes[4] = PictureDisplay5;
-            _pictureBoxes[5] = PictureDisplay6;
-            _pictureBoxes[6] = PictureDisplay7;
-            _pictureBoxes[7] = PictureDisplay8;
-            _pictureBoxes[8] = PictureDisplay9;*/
+            /* _pictureBoxes[0] = PictureDisplay1;
+            _pictureBoxes[1] = PictureDisplay2;
+            _pictureBoxes[2] = PictureDisplay3;
+             _pictureBoxes[3] = PictureDisplay4;
+             _pictureBoxes[4] = PictureDisplay5;
+             _pictureBoxes[5] = PictureDisplay6;
+             _pictureBoxes[6] = PictureDisplay7;
+             _pictureBoxes[7] = PictureDisplay8;
+             _pictureBoxes[8] = PictureDisplay9;*/
 
             //_galleryImageNames = new List<string>();
             //_galleryImageNames.Add("..\\..\\FishAssets\\Urchin.png");
             //_ModelData.load(_galleryImageNames);
         }
 
-        
+
 
         /// <summary>
         /// Method - Retrieve and display the next image in the collection
@@ -124,8 +124,8 @@ namespace ImageProgram
             
             if (_images.Count > 0)
             {
-                _imageKey = CircularAdder(_images.Count, 1);
-                PictureDisplay9.Image = _images[_imageKey];
+                /*_imageKey = CircularAdder(_images.Count, 1);
+                PictureDisplay9.Image = _images[_imageKey];*/
 
                 /*
                 if (_imageKey < (_galleryImageNames.Count - 1)) 
@@ -138,16 +138,24 @@ namespace ImageProgram
 
             }
 
-            if (_images.Count > 9)
+            //if (_images.Count > 9 && _setKey < (_images.Count + 1))
+            if (_images.Count > (_setKey + 9))
             {
-                /*_setKey = _setKey + 9;
-
-                   for (int i = 0; i < 9; i++) 
+                _setKey = _setKey + 9;
+                Debug.WriteLine("imageCount: " + _images.Count + " Set Key: " + _setKey);
+                for (int i = 0; i < _pictureBoxes.Count; i++) 
                    {
-                     _pictureBoxes[i].Image = _images[i + _setKey];
+                    if (_images.ContainsKey(i + _setKey))
+                    {
+                        _pictureBoxes[i].Image = _images[i + _setKey];
+                    }
+                    else {
+                        _pictureBoxes[i].Image = null;
+                    }
+                     
                      //Debug.WriteLine("PDIsp: " + _pictureBoxes[i].Image);
-                     Debug.WriteLine("PDIsp: " + _images[i].Tag);
-                 }*/
+                     //Debug.WriteLine("PDIsp: " + i + " Set Key: " + _setKey);
+                 }
 
             }
 
@@ -162,7 +170,7 @@ namespace ImageProgram
         /// <param name="e"></param>
         private void ImageCollection_Previous(object sender, EventArgs e) 
         {
-
+            /*
             if (_images.Count > 0)
             {
                 _imageKey = CircularAdder(_images.Count, -1);
@@ -171,7 +179,7 @@ namespace ImageProgram
                 for (int i = 0; i < 9; i++) 
                 {
                     PictureDisplay[i]
-                }*/
+                }
                 //_pictureBoxes[8].ImageLocation = _images[_imageKey];
 
                 
@@ -179,18 +187,26 @@ namespace ImageProgram
 
                     PictureDisplay9.Image = _images[_imageKey];
                 
-            }
+            }*/
 
-            if (_images.Count > 9)
+            if (_images.Count > 9 & _setKey > 0)
             {
-                /*_setKey = _setKey - 9;
+                _setKey = _setKey - 9;
 
-                   for (int i = 0; i < 9; i++) 
-                   {
-                     _pictureBoxes[i].Image = _images[i + _setKey];
-                     //Debug.WriteLine("PDIsp: " + _pictureBoxes[i].Image);
-                     Debug.WriteLine("PDIsp: " + _images[i].Tag);
-                 }*/
+                for (int i = 0; i < _pictureBoxes.Count; i++)
+                {
+                    if (_images.ContainsKey(i + _setKey))
+                    {
+                        _pictureBoxes[i].Image = _images[i + _setKey];
+                    }
+                    else
+                    {
+                        _pictureBoxes[i].Image = null;
+                    }
+
+                    //Debug.WriteLine("PDIsp: " + _pictureBoxes[i].Image);
+                    Debug.WriteLine("ImgCount: " + _images.Count + " Set Key: " + _setKey);
+                }
 
             }
 
@@ -242,6 +258,23 @@ namespace ImageProgram
                 //_images.Add(_images.Count, galleryFile.FileName);
                 //PictureDisplay1.Image = _images[_images.Count-1];
 
+                for (int i = 0; i < _pictureBoxes.Count; i++)
+                {
+                    if (_images.ContainsKey(i + _setKey))
+                    {
+                        _pictureBoxes[i].Image = _images[i + _setKey];
+                    }
+                    else
+                    {
+                        _pictureBoxes[i].Image = null;
+                    }
+
+                    //Debug.WriteLine("PDIsp: " + _pictureBoxes[i].Image);
+                    //Debug.WriteLine("PDIsp: " + i + " Set Key: " + _setKey);
+                }
+
+                //Counts 
+                /*
                 //Place images into picture boxes
                 foreach (KeyValuePair<int, Image> entry in _images) 
                 {
@@ -255,6 +288,7 @@ namespace ImageProgram
                        // Debug.WriteLine("No more picture boxes for " + entry.Key + " " + entry.Value + "!");
                     
                 }
+                */
                 //Debug.WriteLine("ImageNum: " + _images.Count);
 
                 //PictureDisplay2.Image = _images[_images.Count-2];
