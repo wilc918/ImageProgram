@@ -140,6 +140,7 @@ namespace ImageProgram
             this.Controls.Add(this.DisplayViewImage);
             this.Name = "DisplayView";
             this.Text = "DisplayView";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.DisplayView_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.DisplayViewImage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

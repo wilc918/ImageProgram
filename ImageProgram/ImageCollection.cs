@@ -187,11 +187,20 @@ namespace ImageProgram
         }
 
         private void ImageDoubleClick(object sender, EventArgs e) {
+            
             //Cast selected image as PictureBox so that I have access to the methods of PictureBox, call it chosenImage:
             PictureBox chosenImage = (PictureBox)sender;
+
+
             Debug.WriteLine("Image clicked is: " + chosenImage.BackColor);
+            if (chosenImage.Image != null)
+            {
+                Debug.WriteLine("Image clicked is: " + chosenImage.Image);
+                DisplayView displayImage = new DisplayView(chosenImage.Image);
+            }
+            
             //Create display view using chosenImage, call it displayImage:
-            DisplayView displayImage = new DisplayView(chosenImage.Image);
+           // DisplayView displayImage = new DisplayView(chosenImage.Image);
             //displayImage.Show();
         }
         #endregion

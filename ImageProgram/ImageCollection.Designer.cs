@@ -221,6 +221,7 @@ namespace ImageProgram
             this.Controls.Add(this.PictureDisplay9);
             this.Controls.Add(this.PreviousImageButton);
             this.Controls.Add(this.NextImageButton);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "ImageCollection";
             this.Text = "CollectionView";
             ((System.ComponentModel.ISupportInitialize)(this.PictureDisplay9)).EndInit();
