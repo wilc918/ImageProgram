@@ -173,17 +173,28 @@ namespace ImageProgram
                 {
                     _pictureBoxes[i].Image = _images[i + _setKey];
                     _pictureBoxes[i].Cursor = Cursors.Hand;
-                    //_pictureBoxes[i].BackColor = Color.Beige;
+                   
                 }
                 else
                 {
                     _pictureBoxes[i].Image = null;
                     _pictureBoxes[i].Cursor = Cursors.Default;
                 }
-
+                _pictureBoxes[i].BackColor = Color.FromKnownColor(KnownColor.Control);
+                _pictureBoxes[i].BorderStyle = BorderStyle.FixedSingle;
                 //Debug.WriteLine("PDIsp: " + _pictureBoxes[i].Image);
                 //Debug.WriteLine("PDIsp: " + i + " Set Key: " + _setKey);
             }
+        }
+
+        private void ImageClick(object sender, EventArgs e) {
+
+            PictureBox chosenImage = (PictureBox)sender;
+            RefreshImages();
+            chosenImage.BackColor = Color.FromKnownColor(KnownColor.ActiveBorder);
+            //chosenImage.BorderStyle = BorderStyle.Fixed3D;
+            //chosenImage.Update();
+
         }
 
         private void ImageDoubleClick(object sender, EventArgs e) {
@@ -230,5 +241,10 @@ namespace ImageProgram
             return _cCounter;
         }
         #endregion
+
+        private void PictureDisplay1_MouseDown(object sender, MouseEventArgs e)
+        {
+            ImageClick(sender, e);
+        }
     }
 }

@@ -80,9 +80,10 @@ namespace ImageProgram
             this.PictureDisplay9.Location = new System.Drawing.Point(338, 257);
             this.PictureDisplay9.Name = "PictureDisplay9";
             this.PictureDisplay9.Size = new System.Drawing.Size(150, 111);
-            this.PictureDisplay9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PictureDisplay9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PictureDisplay9.TabIndex = 3;
             this.PictureDisplay9.TabStop = false;
+            this.PictureDisplay9.Click += new System.EventHandler(this.ImageClick);
             this.PictureDisplay9.DoubleClick += new System.EventHandler(this.ImageDoubleClick);
             // 
             // AddImagesButton
@@ -102,9 +103,10 @@ namespace ImageProgram
             this.PictureDisplay8.Location = new System.Drawing.Point(175, 257);
             this.PictureDisplay8.Name = "PictureDisplay8";
             this.PictureDisplay8.Size = new System.Drawing.Size(150, 111);
-            this.PictureDisplay8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PictureDisplay8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PictureDisplay8.TabIndex = 5;
             this.PictureDisplay8.TabStop = false;
+            this.PictureDisplay8.Click += new System.EventHandler(this.ImageClick);
             this.PictureDisplay8.DoubleClick += new System.EventHandler(this.ImageDoubleClick);
             // 
             // PictureDisplay7
@@ -114,9 +116,10 @@ namespace ImageProgram
             this.PictureDisplay7.Location = new System.Drawing.Point(13, 257);
             this.PictureDisplay7.Name = "PictureDisplay7";
             this.PictureDisplay7.Size = new System.Drawing.Size(150, 111);
-            this.PictureDisplay7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PictureDisplay7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PictureDisplay7.TabIndex = 6;
             this.PictureDisplay7.TabStop = false;
+            this.PictureDisplay7.Click += new System.EventHandler(this.ImageClick);
             this.PictureDisplay7.DoubleClick += new System.EventHandler(this.ImageDoubleClick);
             // 
             // PictureDisplay6
@@ -126,9 +129,10 @@ namespace ImageProgram
             this.PictureDisplay6.Location = new System.Drawing.Point(338, 134);
             this.PictureDisplay6.Name = "PictureDisplay6";
             this.PictureDisplay6.Size = new System.Drawing.Size(150, 111);
-            this.PictureDisplay6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PictureDisplay6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PictureDisplay6.TabIndex = 7;
             this.PictureDisplay6.TabStop = false;
+            this.PictureDisplay6.Click += new System.EventHandler(this.ImageClick);
             this.PictureDisplay6.DoubleClick += new System.EventHandler(this.ImageDoubleClick);
             // 
             // PictureDisplay5
@@ -138,9 +142,10 @@ namespace ImageProgram
             this.PictureDisplay5.Location = new System.Drawing.Point(175, 134);
             this.PictureDisplay5.Name = "PictureDisplay5";
             this.PictureDisplay5.Size = new System.Drawing.Size(150, 111);
-            this.PictureDisplay5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PictureDisplay5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PictureDisplay5.TabIndex = 8;
             this.PictureDisplay5.TabStop = false;
+            this.PictureDisplay5.Click += new System.EventHandler(this.ImageClick);
             this.PictureDisplay5.DoubleClick += new System.EventHandler(this.ImageDoubleClick);
             // 
             // PictureDisplay4
@@ -150,9 +155,10 @@ namespace ImageProgram
             this.PictureDisplay4.Location = new System.Drawing.Point(12, 134);
             this.PictureDisplay4.Name = "PictureDisplay4";
             this.PictureDisplay4.Size = new System.Drawing.Size(150, 111);
-            this.PictureDisplay4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PictureDisplay4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PictureDisplay4.TabIndex = 9;
             this.PictureDisplay4.TabStop = false;
+            this.PictureDisplay4.Click += new System.EventHandler(this.ImageClick);
             this.PictureDisplay4.DoubleClick += new System.EventHandler(this.ImageDoubleClick);
             // 
             // PictureDisplay3
@@ -163,9 +169,10 @@ namespace ImageProgram
             this.PictureDisplay3.Location = new System.Drawing.Point(338, 12);
             this.PictureDisplay3.Name = "PictureDisplay3";
             this.PictureDisplay3.Size = new System.Drawing.Size(150, 111);
-            this.PictureDisplay3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PictureDisplay3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PictureDisplay3.TabIndex = 10;
             this.PictureDisplay3.TabStop = false;
+            this.PictureDisplay3.Click += new System.EventHandler(this.ImageClick);
             this.PictureDisplay3.DoubleClick += new System.EventHandler(this.ImageDoubleClick);
             // 
             // PictureDisplay2
@@ -176,9 +183,10 @@ namespace ImageProgram
             this.PictureDisplay2.Location = new System.Drawing.Point(175, 12);
             this.PictureDisplay2.Name = "PictureDisplay2";
             this.PictureDisplay2.Size = new System.Drawing.Size(150, 111);
-            this.PictureDisplay2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PictureDisplay2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PictureDisplay2.TabIndex = 11;
             this.PictureDisplay2.TabStop = false;
+            this.PictureDisplay2.Click += new System.EventHandler(this.ImageClick);
             this.PictureDisplay2.DoubleClick += new System.EventHandler(this.ImageDoubleClick);
             // 
             // PictureDisplay1
@@ -189,10 +197,11 @@ namespace ImageProgram
             this.PictureDisplay1.Location = new System.Drawing.Point(12, 12);
             this.PictureDisplay1.Name = "PictureDisplay1";
             this.PictureDisplay1.Size = new System.Drawing.Size(150, 111);
-            this.PictureDisplay1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PictureDisplay1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PictureDisplay1.TabIndex = 12;
             this.PictureDisplay1.TabStop = false;
             this.PictureDisplay1.DoubleClick += new System.EventHandler(this.ImageDoubleClick);
+            this.PictureDisplay1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PictureDisplay1_MouseDown);
             // 
             // label1
             // 
