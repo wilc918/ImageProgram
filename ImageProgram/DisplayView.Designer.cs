@@ -138,6 +138,7 @@ namespace ImageProgram
             this.Controls.Add(this.RotLeft);
             this.Controls.Add(this.RotRight);
             this.Controls.Add(this.DisplayViewImage);
+            this.MinimumSize = new System.Drawing.Size(400, 350);
             this.Name = "DisplayView";
             this.Text = "DisplayView";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.DisplayView_FormClosed);

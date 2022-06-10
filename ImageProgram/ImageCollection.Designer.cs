@@ -29,6 +29,7 @@ namespace ImageProgram
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.NextImageButton = new System.Windows.Forms.Button();
             this.PreviousImageButton = new System.Windows.Forms.Button();
             this.PictureDisplay9 = new System.Windows.Forms.PictureBox();
@@ -42,6 +43,9 @@ namespace ImageProgram
             this.PictureDisplay2 = new System.Windows.Forms.PictureBox();
             this.PictureDisplay1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.deleteImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ImageCollectPanel = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.PictureDisplay9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureDisplay8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureDisplay7)).BeginInit();
@@ -51,10 +55,12 @@ namespace ImageProgram
             ((System.ComponentModel.ISupportInitialize)(this.PictureDisplay3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureDisplay2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureDisplay1)).BeginInit();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // NextImageButton
             // 
+            this.NextImageButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.NextImageButton.Location = new System.Drawing.Point(388, 398);
             this.NextImageButton.Name = "NextImageButton";
             this.NextImageButton.Size = new System.Drawing.Size(100, 40);
@@ -65,6 +71,7 @@ namespace ImageProgram
             // 
             // PreviousImageButton
             // 
+            this.PreviousImageButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.PreviousImageButton.Location = new System.Drawing.Point(12, 398);
             this.PreviousImageButton.Name = "PreviousImageButton";
             this.PreviousImageButton.Size = new System.Drawing.Size(100, 40);
@@ -83,11 +90,13 @@ namespace ImageProgram
             this.PictureDisplay9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PictureDisplay9.TabIndex = 3;
             this.PictureDisplay9.TabStop = false;
+            this.PictureDisplay9.Visible = false;
             this.PictureDisplay9.Click += new System.EventHandler(this.ImageClick);
             this.PictureDisplay9.DoubleClick += new System.EventHandler(this.ImageDoubleClick);
             // 
             // AddImagesButton
             // 
+            this.AddImagesButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.AddImagesButton.Location = new System.Drawing.Point(203, 398);
             this.AddImagesButton.Name = "AddImagesButton";
             this.AddImagesButton.Size = new System.Drawing.Size(100, 40);
@@ -106,6 +115,7 @@ namespace ImageProgram
             this.PictureDisplay8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PictureDisplay8.TabIndex = 5;
             this.PictureDisplay8.TabStop = false;
+            this.PictureDisplay8.Visible = false;
             this.PictureDisplay8.Click += new System.EventHandler(this.ImageClick);
             this.PictureDisplay8.DoubleClick += new System.EventHandler(this.ImageDoubleClick);
             // 
@@ -119,6 +129,7 @@ namespace ImageProgram
             this.PictureDisplay7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PictureDisplay7.TabIndex = 6;
             this.PictureDisplay7.TabStop = false;
+            this.PictureDisplay7.Visible = false;
             this.PictureDisplay7.Click += new System.EventHandler(this.ImageClick);
             this.PictureDisplay7.DoubleClick += new System.EventHandler(this.ImageDoubleClick);
             // 
@@ -132,6 +143,7 @@ namespace ImageProgram
             this.PictureDisplay6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PictureDisplay6.TabIndex = 7;
             this.PictureDisplay6.TabStop = false;
+            this.PictureDisplay6.Visible = false;
             this.PictureDisplay6.Click += new System.EventHandler(this.ImageClick);
             this.PictureDisplay6.DoubleClick += new System.EventHandler(this.ImageDoubleClick);
             // 
@@ -145,6 +157,7 @@ namespace ImageProgram
             this.PictureDisplay5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PictureDisplay5.TabIndex = 8;
             this.PictureDisplay5.TabStop = false;
+            this.PictureDisplay5.Visible = false;
             this.PictureDisplay5.Click += new System.EventHandler(this.ImageClick);
             this.PictureDisplay5.DoubleClick += new System.EventHandler(this.ImageDoubleClick);
             // 
@@ -158,6 +171,7 @@ namespace ImageProgram
             this.PictureDisplay4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PictureDisplay4.TabIndex = 9;
             this.PictureDisplay4.TabStop = false;
+            this.PictureDisplay4.Visible = false;
             this.PictureDisplay4.Click += new System.EventHandler(this.ImageClick);
             this.PictureDisplay4.DoubleClick += new System.EventHandler(this.ImageDoubleClick);
             // 
@@ -172,6 +186,7 @@ namespace ImageProgram
             this.PictureDisplay3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PictureDisplay3.TabIndex = 10;
             this.PictureDisplay3.TabStop = false;
+            this.PictureDisplay3.Visible = false;
             this.PictureDisplay3.Click += new System.EventHandler(this.ImageClick);
             this.PictureDisplay3.DoubleClick += new System.EventHandler(this.ImageDoubleClick);
             // 
@@ -186,6 +201,7 @@ namespace ImageProgram
             this.PictureDisplay2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PictureDisplay2.TabIndex = 11;
             this.PictureDisplay2.TabStop = false;
+            this.PictureDisplay2.Visible = false;
             this.PictureDisplay2.Click += new System.EventHandler(this.ImageClick);
             this.PictureDisplay2.DoubleClick += new System.EventHandler(this.ImageDoubleClick);
             // 
@@ -200,23 +216,45 @@ namespace ImageProgram
             this.PictureDisplay1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PictureDisplay1.TabIndex = 12;
             this.PictureDisplay1.TabStop = false;
+            this.PictureDisplay1.Visible = false;
             this.PictureDisplay1.DoubleClick += new System.EventHandler(this.ImageDoubleClick);
             this.PictureDisplay1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PictureDisplay1_MouseDown);
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.label1.Location = new System.Drawing.Point(229, 377);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(52, 13);
             this.label1.TabIndex = 13;
             this.label1.Text = "Page 1/1";
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.deleteImageToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 48);
+            // 
+            // deleteImageToolStripMenuItem
+            // 
+            this.deleteImageToolStripMenuItem.Name = "deleteImageToolStripMenuItem";
+            this.deleteImageToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.deleteImageToolStripMenuItem.Text = "Delete Image";
+            this.deleteImageToolStripMenuItem.Click += new System.EventHandler(this.RemoveImagesButtonsClick);
+            // 
+            // ImageCollectPanel
+            // 
+            this.ImageCollectPanel.Location = new System.Drawing.Point(12, 12);
+            this.ImageCollectPanel.Name = "ImageCollectPanel";
+            this.ImageCollectPanel.Size = new System.Drawing.Size(476, 356);
+            this.ImageCollectPanel.TabIndex = 14;
+            // 
             // ImageCollection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(500, 450);
+            this.ClientSize = new System.Drawing.Size(500, 557);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.PictureDisplay1);
             this.Controls.Add(this.PictureDisplay2);
@@ -230,7 +268,7 @@ namespace ImageProgram
             this.Controls.Add(this.PictureDisplay9);
             this.Controls.Add(this.PreviousImageButton);
             this.Controls.Add(this.NextImageButton);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Controls.Add(this.ImageCollectPanel);
             this.Name = "ImageCollection";
             this.Text = "CollectionView";
             ((System.ComponentModel.ISupportInitialize)(this.PictureDisplay9)).EndInit();
@@ -242,8 +280,8 @@ namespace ImageProgram
             ((System.ComponentModel.ISupportInitialize)(this.PictureDisplay3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureDisplay2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureDisplay1)).EndInit();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -262,5 +300,8 @@ namespace ImageProgram
         private System.Windows.Forms.PictureBox PictureDisplay2;
         private System.Windows.Forms.PictureBox PictureDisplay1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem deleteImageToolStripMenuItem;
+        private System.Windows.Forms.Panel ImageCollectPanel;
     }
 }
