@@ -83,6 +83,7 @@ namespace ImageProgram
             this.DispScale.TabIndex = 3;
             this.DispScale.Text = "Scale";
             this.DispScale.UseVisualStyleBackColor = true;
+            this.DispScale.Click += new System.EventHandler(this.ImageScale);
             // 
             // ScaleInput
             // 
@@ -113,6 +114,7 @@ namespace ImageProgram
             this.DispSave.TabIndex = 6;
             this.DispSave.Text = "Save File";
             this.DispSave.UseVisualStyleBackColor = true;
+            this.DispSave.Click += new System.EventHandler(this.ImageSave);
             // 
             // button1
             // 

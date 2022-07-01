@@ -35,11 +35,17 @@ namespace ImageProgram
             //Instantiate a Dictionary<int, Image> for the program gallery to store its images in, store it as an IDictionary and call it galleryItems:
             IDictionary<int, PictureBox> galleryPictureBoxes = (factoryLocator.Get<IDictionary<int, PictureBox>>() as IFactory<IDictionary<int, PictureBox>>).Create<Dictionary<int, PictureBox>>();
 
+            IImageManipulator imageManip = (factoryLocator.Get<IImageManipulator>() as IFactory<IImageManipulator>).Create<ImageManipulator>();
+
             //Instantiate an ImageData to store all the imageData in, store it as IImagedata and call it imageData:
             IImageData imageData = (factoryLocator.Get<IImageData>() as IFactory<IImageData>).Create<ImageData>();
 
+            //Instantiate a pictureBoxFactory
+            IPictureBoxFactory pictureBoxFactory = (factoryLocator.Get<IPictureBoxFactory>() as IFactory<IPictureBoxFactory>).Create<PictureBoxFactory>();
+            
+
             // Run the ImageCollectionForm with imageData injected
-            Application.Run(new ImageCollection(imageData, galleryItems, galleryPictureBoxes));
+            Application.Run(new ImageCollection(imageData, galleryItems, galleryPictureBoxes, imageManip, pictureBoxFactory));
         }
 
 

@@ -22,16 +22,20 @@ namespace ImageProgram
         // Declare an Image to store image in, call it _image:
         private Image _image;
 
+        private IImageManipulator _imageManipulator;
+
         /// <summary>
         /// Constructor
         /// </summary>
-        public DisplayView(Image currentImage)
+        public DisplayView(Image currentImage, IImageManipulator imageManip)
         {
             InitializeComponent();
             Debug.WriteLine("DisplayView Launched!");
 
             //SET image to image to be edited:
             _image = currentImage;
+            //SET _imageManipulator to the imageManipulator we are going to use:
+            _imageManipulator = imageManip;
 
             //Set the displayViewImage to show the image we are editing:
             //Creating a clone of the image so we can make changes without consequence.
@@ -52,12 +56,14 @@ namespace ImageProgram
 
         private void ImageRotateRight(object sender, EventArgs e) 
         {
-            DisplayViewImage.Image.RotateFlip(RotateFlipType.Rotate90FlipNone);
+            //DisplayViewImage.Image.RotateFlip(RotateFlipType.Rotate90FlipNone);
+            DisplayViewImage.Image = _imageManipulator.Rotate(DisplayViewImage.Image, 90);
             DisplayViewImage.Refresh();
         }
         private void ImageRotateLeft(object sender, EventArgs e)
         {
-            DisplayViewImage.Image.RotateFlip(RotateFlipType.Rotate270FlipNone);
+            //DisplayViewImage.Image.RotateFlip(RotateFlipType.Rotate270FlipNone);
+            DisplayViewImage.Image = _imageManipulator.Rotate(DisplayViewImage.Image, -90);
             DisplayViewImage.Refresh();
         }
 
@@ -66,13 +72,21 @@ namespace ImageProgram
             // Thumbnail does not update, image contained within however is updated despite the cancel button being clicked.
             // I should make the display view create a new instance rather than use a direct reference to the original
             // The save button will then apply this clone to the original image which can be seen in the thumbnail.
-            DisplayViewImage.Image.RotateFlip(RotateFlipType.RotateNoneFlipX);
+            //DisplayViewImage.Image.RotateFlip(RotateFlipType.RotateNoneFlipX);
+            DisplayViewImage.Image = _imageManipulator.Flip(DisplayViewImage.Image, false);
             DisplayViewImage.Refresh();
         }
 
         private void ImageScale(object sender, EventArgs e)
         {
             //DisplayViewImage.Image. = 200;
+            DisplayViewImage.Image = _imageManipulator.Resize(DisplayViewImage.Image, new Size(DisplayViewImage.Width*2,DisplayViewImage.Height*2));
+        }
+
+        private void ImageSave(object sender, EventArgs e) 
+        {
+            Debug.WriteLine("Image filepath: "+DisplayViewImage.ImageLocation);
+            //_imageManipulator.SaveFile(DisplayViewImage.);
         }
 
         private void DisplayView_FormClosed(object sender, FormClosedEventArgs e)

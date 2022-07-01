@@ -52,6 +52,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GalleryPictureBox.cs" />
+    <Compile Include="PictureBoxFactory.cs" />
+    <Compile Include="collectionPictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ImageManipulator.cs" />
     <Compile Include="DataElement.cs" />
     <Compile Include="Delegates.cs" />
@@ -76,6 +81,7 @@
     <Compile Include="IDataElement.cs" />
     <Compile Include="FactoryLocator.cs" />
     <Compile Include="IImageManipulator.cs" />
+    <Compile Include="IPictureBoxFactory.cs" />
     <Compile Include="IService.cs" />
     <Compile Include="IServiceLocator.cs" />
     <Compile Include="Program.cs" />

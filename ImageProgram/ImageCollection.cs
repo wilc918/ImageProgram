@@ -28,7 +28,7 @@ namespace ImageProgram
         private IImageData _imageData;
 
         // DECLARE a form for ImageSelection, call it _imageSelectForm:
-        private Form _imageSelectForm;
+       // private Form _imageSelectForm;
 
         //DECLARE an int to store the value for the next imageKey, call it _imageKey, set to 0:
         int _imageKey = 0;
@@ -44,24 +44,24 @@ namespace ImageProgram
         // Image Location String
         //private IDictionary<int, String> _images;
 
-        private FlowLayoutPanel collectionflowLayoutPanel;
+        //private FlowLayoutPanel collectionflowLayoutPanel;
 
         //DECLARE a Dictionary<int, DataElement> to store images in, call it _images:
         private IDictionary<int, PictureBox> _pictureBoxes;
 
-        //DECLARE a Dictionary<int, DataElement> to store images in, call it _images:
-        private IDictionary<int, PictureBox> _pBoxes;
-
+        private IImageManipulator _imageManipulator;
 
         // DECLARE an int to act as a circular counter index into _images:
         private int _cCounter = 0;
 
+        //Declare an IPictureBoxFactory for storing a PictureBoxFactory
+        private IPictureBoxFactory _pictureBoxFactory;
 
         /// <summary>
         /// CONSTRUCTOR - ImageCollection Form Object Constructor
         /// </summary>
         /// <param name="ImageData">Data about images</param>
-        public ImageCollection(IImageData ImageData, IDictionary<int, Image> imageContainer, IDictionary<int, PictureBox> pictureBoxContainer)
+        public ImageCollection(IImageData ImageData, IDictionary<int, Image> imageContainer, IDictionary<int, PictureBox> pictureBoxContainer, IImageManipulator imageManip, IPictureBoxFactory pictureBoxFactory)
         {
             InitializeComponent();
 
@@ -74,48 +74,23 @@ namespace ImageProgram
             //Instantiate images Dictionary
             _images = imageContainer;
 
+            _pictureBoxFactory = pictureBoxFactory;
+
             _pictureBoxes = pictureBoxContainer;
 
-            _pBoxes = new Dictionary<int, PictureBox>();
+            //_pictureBoxes = new Dictionary<int, PictureBox>();
 
-            /*collectionflowLayoutPanel = new FlowLayoutPanel();
-            collectionflowLayoutPanel.FlowDirection = FlowDirection.LeftToRight;
-            collectionflowLayoutPanel.Name = "CollectionLayout";
-                //collectionflowLayoutPanel.AutoSize = true;
-            this.Controls.Add(collectionflowLayoutPanel);
-                //collectionflowLayoutPanel.Location = new Point(12, 462);
-                //collectionflowLayoutPanel.Size = new Size(476, 125);
-            collectionflowLayoutPanel.Location = new System.Drawing.Point(12, 12);
-            collectionflowLayoutPanel.Size = new System.Drawing.Size(475, 378);
-            collectionflowLayoutPanel.WrapContents = true;
-            collectionflowLayoutPanel.SendToBack();*/
+            _imageManipulator = imageManip;
 
-
-            // Creates array of PictureBoxes
-            PictureBox[] boxCollection = this.Controls.OfType<PictureBox>().ToArray();
-
-            // Moves them into Dictionary
-            for (int i = 0; i < boxCollection.Length; i++) 
-            {
-                _pictureBoxes.Add(i, boxCollection[i]);
-                Debug.WriteLine(i +" " + _pictureBoxes[i].Name);
-                //collectionflowLayoutPanel.Controls.Add(boxCollection[i]);
-            }
-
-            Debug.WriteLine("PBCount: " + _pictureBoxes.Count);
+            _galleryImageNames = new List<string>();
 
             
             //Adding FlowLayoutPanel
-            collectionflowLayoutPanel = new FlowLayoutPanel();
-            //ImageCollectPanel.Controls.Add(collectionflowLayoutPanel);
+           // collectionflowLayoutPanel = new FlowLayoutPanel();
             collectionflowLayoutPanel.FlowDirection = FlowDirection.LeftToRight;
             collectionflowLayoutPanel.Name = "CollectionLayout";
             ImageCollectPanel.Controls.Add(collectionflowLayoutPanel);
-            //collectionflowLayoutPanel.Location = new Point(12, 462);
-            //collectionflowLayoutPanel.Location = new Point(8, 462);
             collectionflowLayoutPanel.Location = new Point(12, 12);
-            //collectionflowLayoutPanel.Size = new Size(476, 125);
-            //collectionflowLayoutPanel.Size = new Size(496, 125);
             collectionflowLayoutPanel.Size = new Size(475, 375);
             collectionflowLayoutPanel.WrapContents = true;
             collectionflowLayoutPanel.SendToBack();
@@ -123,33 +98,12 @@ namespace ImageProgram
             collectionflowLayoutPanel.AutoScroll = true;
             collectionflowLayoutPanel.AutoSize = true;
             collectionflowLayoutPanel.Dock = DockStyle.Fill;
-            //collectionflowLayoutPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            //collectionflowLayoutPanel.Dock = DockStyle.Top;
-            //collectionflowLayoutPanel.Anchor = AnchorStyles.Right | AnchorStyles.Left| AnchorStyles.Top | AnchorStyles.Bottom;
             ImageCollectPanel.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
-            //collectionflowLayoutPanel.Padding = new Padding(5, 2, 5, 2);
             collectionflowLayoutPanel.VerticalScroll.Visible = false;
             collectionflowLayoutPanel.HorizontalScroll.Visible = false;
+
             collectionflowLayoutPanel.BorderStyle = BorderStyle.FixedSingle;
             Debug.WriteLine("Margin: "+ collectionflowLayoutPanel.AutoScrollMargin);
-
-
-            ////Adding buttons to new flowLayoutPanel.
-            //for (int i = 0; i < 12; i++) { 
-            //    /*Button button = new Button();
-            //    button.Tag = i;
-            //    collectionflowLayoutPanel.Controls.Add(button);*/
-            //    PictureBox pictureBox = new PictureBox();
-            //    pictureBox.Tag = i;
-            //    pictureBox.Size = new Size(150, 111);
-            //    pictureBox.BorderStyle = BorderStyle.FixedSingle;
-            //    _pBoxes.Add(i, pictureBox);
-            //    collectionflowLayoutPanel.Controls.Add(pictureBox);
-            //    if (!_pictureBoxes.ContainsKey(i)) {
-            //        Debug.WriteLine("There is no entry inside of "+i);
-            //    } 
-            //    Debug.WriteLine("Imagecount is"+_images.Count);
-            //}
         }
 
         #region Private Methods
@@ -186,13 +140,9 @@ namespace ImageProgram
                 _setKey = _setKey - 9;
 
                 RefreshImages();
-                collectionflowLayoutPanel.Controls[1].Visible = false;
-                int visibleBtns = collectionflowLayoutPanel.Controls.Count;
-                Debug.WriteLine("visibleButtons = " + visibleBtns);
-            }
-            else { 
-               // _pictureBoxes[3].Dispose();
-                _pBoxes[3].Visible = false;
+                //collectionflowLayoutPanel.Controls[1].Visible = false;
+                //int visibleBtns = collectionflowLayoutPanel.Controls.Count;
+                //Debug.WriteLine("visibleButtons = " + visibleBtns);
             }
 
         }
@@ -206,12 +156,12 @@ namespace ImageProgram
         {
 
             //retrieveImageList
-            _galleryImageNames = _imageData.GetCollectionList();
+            //_galleryImageNames = _imageData.GetCollectionList();
             
             if (_galleryImageNames != null) 
             {
                 //Code to retrieve image name using imagekey.
-                PictureDisplay9.Image = _ModelData.getImage(_galleryImageNames[_imageKey], PictureDisplay9.Width, PictureDisplay9.Height);
+               // PictureDisplay9.Image = _ModelData.getImage(_galleryImageNames[_imageKey], PictureDisplay9.Width, PictureDisplay9.Height);
                 //PictureDisplay.Image = _images[_imageKey];
             }
         }
@@ -227,7 +177,7 @@ namespace ImageProgram
             //Open File Dialog enables the user to choose files from file explorer.
             OpenFileDialog galleryFile = new OpenFileDialog();
 
-           // galleryFile.Multiselect = true;
+            galleryFile.Multiselect = true;
             // This filter ensures that only .jpgs and .pngs are allowed
             galleryFile.Filter = "Choose Image(*.jpg;*.png;*.gif)|*.jpg;*.png;*.gif;";
             galleryFile.Title = "Add image to gallery";
@@ -235,10 +185,57 @@ namespace ImageProgram
             //If the user presses OK on the file explorer
             if (galleryFile.ShowDialog() == DialogResult.OK) 
             {
-                //PictureDisplay.Image = Image.FromFile(galleryFile.FileName);
-                //_ModelData.load(_selectedItems);
-                _images.Add(_images.Count, Image.FromFile(galleryFile.FileName));
+                //Convert the chosen array of strings into a list:
+                List<String> imageNames = galleryFile.FileNames.ToList();
+
+                _galleryImageNames = _ModelData.load(imageNames);
                 
+                foreach (string file in _galleryImageNames) 
+                {
+                    collectionPictureBox pictureBox = (collectionPictureBox)_pictureBoxFactory.MakePictureBox();
+                    pictureBox.Image = _ModelData.getImage(file, pictureBox.Width,pictureBox.Height);
+
+                    pictureBox.setClick(new EventHandler(ImageClick));
+                    pictureBox.setContextMenu(contextMenuStrip1);
+                    pictureBox.setDoubleClick(new EventHandler(ImageDoubleClick));
+                    pictureBox.Tag = _pictureBoxes.Count;
+
+                    _pictureBoxes.Add(_pictureBoxes.Count, pictureBox);
+                    collectionflowLayoutPanel.Controls.Add(pictureBox);
+                }
+
+
+                
+                /*
+                foreach (String file in galleryFile.FileNames)
+                {
+                    try
+                    {
+                        String fileString = file;
+                        _galleryImageNames.Add(fileString);
+                        Debug.WriteLine("Image filepath: " + fileString);
+                        //_images.Add(_images.Count, Image.FromFile(file));
+                        collectionPictureBox pictureBox = (collectionPictureBox)_pictureBoxFactory.MakePictureBox();
+                        _ModelData.load(_galleryImageNames);
+                        //PictureBox pictureBox = new PictureBox();
+                        pictureBox.Tag = _pictureBoxes.Count;
+                        //pictureBox.Size = new Size(150, 111);
+                        pictureBox.setClick(new EventHandler(ImageClick));
+                        pictureBox.ContextMenuStrip = contextMenuStrip1;
+                        //pictureBox.Click += new EventHandler(ImageClick);
+                        pictureBox.DoubleClick += new EventHandler(ImageDoubleClick);
+                       // pictureBox.Image = _ModelData.getImage(_ModelData);
+                        pictureBox.Image = Image.FromFile(_galleryImageNames[_galleryImageNames.Count-1]);
+                        //pictureBox.Image = _images[_images.Count-1];
+
+                        _pictureBoxes.Add(_pictureBoxes.Count, pictureBox);
+                        collectionflowLayoutPanel.Controls.Add(pictureBox);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Key not found"+ex);
+                    }
+                }*/
                 RefreshImages();
 
             }
@@ -246,16 +243,17 @@ namespace ImageProgram
 
         private void RemoveImagesButtonsClick(object sender, EventArgs e) 
         {
-            ToolStripMenuItem menuItem = sender as ToolStripMenuItem; 
+            ToolStripMenuItem menuItem = sender as ToolStripMenuItem;
+            Debug.WriteLine(sender);
             //MessageBox.Show("File menu item clicked"+pbMenu.SourceControl.Tag);
             ;
             if (menuItem != null && MessageBox.Show("Delete this image?", "Delete Image", MessageBoxButtons.OKCancel)==DialogResult.OK)
             {
                 ContextMenuStrip pbMenu = menuItem.Owner as ContextMenuStrip;
                 PictureBox pbDelete = pbMenu.SourceControl as PictureBox;
-                //pbDelete.Image.Dispose();
-                //pbDelete.Dispose();
-                //RefreshImages();
+                pbDelete.Image.Dispose();
+                pbDelete.Dispose();
+                RefreshImages();
             }
         }
 
@@ -264,58 +262,10 @@ namespace ImageProgram
         /// </summary>
         private void RefreshImages() {
 
-            //Adding pictureBoxes to new flowLayoutPanel.
-            for (int j = 0; j < _images.Count; j++)
-            {
-                if (!_pBoxes.ContainsKey(j))
-                {
-                    PictureBox pictureBox = new PictureBox();
-                    pictureBox.Tag = j;
-                    pictureBox.Size = new Size(150, 111);
-                    pictureBox.BorderStyle = BorderStyle.FixedSingle;
-                    pictureBox.ContextMenuStrip = contextMenuStrip1;
-                    pictureBox.Click += new EventHandler(ImageClick);
-                    pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-                    _pBoxes.Add(j, pictureBox);
-                    collectionflowLayoutPanel.Controls.Add(pictureBox);
-
-                    Debug.WriteLine("There is no entry inside of " + j);
-                }
-
-                
-                Debug.WriteLine("Imagecount is" + _images.Count);
+            Debug.WriteLine("Imagecount is" + _images.Count);
+            for (int j = 0; j < _pictureBoxes.Count; j++) {
+                _pictureBoxes[j].BackColor = Color.FromKnownColor(KnownColor.Control);
             }
-
-            for (int j = 0; j < _pBoxes.Count; j++) {
-                if (_images.ContainsKey(j)) 
-                {
-                    _pBoxes[j].Image = _images[j];
-                    _pBoxes[j].Cursor = Cursors.Hand;
-                }
-                _pBoxes[j].BackColor = Color.FromKnownColor(KnownColor.Control);
-            }
-
-            for (int i = 0; i < _pictureBoxes.Count; i++)
-            {
-                if (_images.ContainsKey(i + _setKey))
-                {
-                    _pictureBoxes[i].Image = _images[i + _setKey];
-                    _pictureBoxes[i].Cursor = Cursors.Hand;
-                   
-                }
-                else
-                {
-                    _pictureBoxes[i].Image = null;
-                    _pictureBoxes[i].Cursor = Cursors.Default;
-                }
-                _pictureBoxes[i].BackColor = Color.FromKnownColor(KnownColor.Control);
-                _pictureBoxes[i].BorderStyle = BorderStyle.FixedSingle;
-                //Debug.WriteLine("PDIsp: " + _pictureBoxes[i].Image);
-                //Debug.WriteLine("PDIsp: " + i + " Set Key: " + _setKey);
-
-            }
-
-
         }
 
         private void ImageClick(object sender, EventArgs e) {
@@ -324,8 +274,7 @@ namespace ImageProgram
             RefreshImages();
             chosenImage.BackColor = Color.FromKnownColor(KnownColor.ActiveBorder);
             Debug.WriteLine("This Picture Box Key is: " + chosenImage.Tag);
-            //chosenImage.BorderStyle = BorderStyle.Fixed3D;
-            //chosenImage.Update();
+            //Debug.WriteLine("Image filepath: " + _galleryImageNames[(int)chosenImage.Tag]); Commented out because _galleryImageNames isn't used in this manner anymore.
 
         }
 
@@ -339,8 +288,11 @@ namespace ImageProgram
             if (chosenImage.Image != null)
             {
                 Debug.WriteLine("Image clicked is: " + chosenImage.Image);
-                DisplayView displayImage = new DisplayView(chosenImage.Image);
+                DisplayView displayImage = new DisplayView(chosenImage.Image, _imageManipulator);
+              
+                
             }
+
             
             //Create display view using chosenImage, call it displayImage:
            // DisplayView displayImage = new DisplayView(chosenImage.Image);
