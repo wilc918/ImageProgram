@@ -49,6 +49,7 @@ namespace ImageProgram
             this.DisplayViewImage.Location = new System.Drawing.Point(12, 12);
             this.DisplayViewImage.Name = "DisplayViewImage";
             this.DisplayViewImage.Size = new System.Drawing.Size(516, 271);
+            this.DisplayViewImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.DisplayViewImage.TabIndex = 0;
             this.DisplayViewImage.TabStop = false;
             // 

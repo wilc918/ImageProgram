@@ -30,8 +30,8 @@ namespace ImageProgram
         // DECLARE a form for ImageSelection, call it _imageSelectForm:
        // private Form _imageSelectForm;
 
-        //DECLARE an int to store the value for the next imageKey, call it _imageKey, set to 0:
-        int _imageKey = 0;
+        //DECLARE an int to store the value for the next displayView, call it _displayKey, set to 0:
+        int _displayKey = 0;
 
         //DECLARE an int to store the set number, call it _setKey, set to 0:
         int _setKey = 0;
@@ -41,13 +41,13 @@ namespace ImageProgram
 
         //DECLARE a Dictionary<int, DataElement> to store images in, call it _images:
         private IDictionary<int, Image> _images;
-        // Image Location String
-        //private IDictionary<int, String> _images;
 
         //private FlowLayoutPanel collectionflowLayoutPanel;
 
         //DECLARE a Dictionary<int, DataElement> to store images in, call it _images:
         private IDictionary<int, PictureBox> _pictureBoxes;
+
+        //DECLARE a Dictionary<string, PictureBox> to store associate images with their picturebox
 
         private IImageManipulator _imageManipulator;
 
@@ -186,19 +186,23 @@ namespace ImageProgram
             if (galleryFile.ShowDialog() == DialogResult.OK) 
             {
                 //Convert the chosen array of strings into a list:
-                List<String> imageNames = galleryFile.FileNames.ToList();
+                List<String> imagePaths = galleryFile.FileNames.ToList();
 
-                _galleryImageNames = _ModelData.load(imageNames);
+                //Load the filepaths into into _ModelData and recieve the file names:
+                _galleryImageNames = _ModelData.load(imagePaths);
                 
+                //For each image in the gallery, a collectionPictureBox is produced and an image fit for it is retrieved.
                 foreach (string file in _galleryImageNames) 
                 {
                     collectionPictureBox pictureBox = (collectionPictureBox)_pictureBoxFactory.MakePictureBox();
                     pictureBox.Image = _ModelData.getImage(file, pictureBox.Width,pictureBox.Height);
+                    Debug.WriteLine("Image Filename: "+file);
 
                     pictureBox.setClick(new EventHandler(ImageClick));
                     pictureBox.setContextMenu(contextMenuStrip1);
                     pictureBox.setDoubleClick(new EventHandler(ImageDoubleClick));
-                    pictureBox.Tag = _pictureBoxes.Count;
+                    pictureBox.Tag = file;
+                    pictureBox.AccessibleName = file;
 
                     _pictureBoxes.Add(_pictureBoxes.Count, pictureBox);
                     collectionflowLayoutPanel.Controls.Add(pictureBox);
@@ -279,17 +283,22 @@ namespace ImageProgram
         }
 
         private void ImageDoubleClick(object sender, EventArgs e) {
+
             
+
             //Cast selected image as PictureBox so that I have access to the methods of PictureBox, call it chosenImage:
             PictureBox chosenImage = (PictureBox)sender;
-
+            Debug.WriteLine("ImageLocation is: " + chosenImage.ImageLocation);
 
             Debug.WriteLine("Image clicked is: " + chosenImage.BackColor);
             if (chosenImage.Image != null)
             {
                 Debug.WriteLine("Image clicked is: " + chosenImage.Image);
-                DisplayView displayImage = new DisplayView(chosenImage.Image, _imageManipulator);
-              
+                Debug.WriteLine("PictureBox.Tag is: " + chosenImage.Tag);
+                //DisplayView displayImage = new DisplayView(chosenImage.Image, _imageManipulator);
+                
+                DisplayView displayImage = new DisplayView();
+                displayImage.Initialise(_ModelData.getImage, chosenImage.Tag.ToString(), _imageManipulator);
                 
             }
 

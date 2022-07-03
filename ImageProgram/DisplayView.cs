@@ -21,8 +21,11 @@ namespace ImageProgram
 
         // Declare an Image to store image in, call it _image:
         private Image _image;
-
+        // Declare an IImageManipulator to store the ImageManipulator class, call it _imageManipulator
         private IImageManipulator _imageManipulator;
+        // Declare a RetrieveImageDelegate for the delegate to be called to retrieve Image, call it _getImage
+        private RetrieveImageDelegate _getImage;
+
 
         /// <summary>
         /// Constructor
@@ -45,6 +48,25 @@ namespace ImageProgram
 
             this.Show();
             DisplayViewImage.SizeMode = PictureBoxSizeMode.Zoom;
+        }
+
+        public DisplayView()
+        {
+            InitializeComponent();
+            Debug.WriteLine("DisplayView Launched!");
+            this.Show();
+            //DisplayViewImage.SizeMode = PictureBoxSizeMode.Zoom;
+        }
+
+        public void Initialise(RetrieveImageDelegate retrieveImage, string imageName, IImageManipulator imageManip)
+        {
+            //SET _getImagePath to retrieveImage
+            _getImage += retrieveImage;
+            //INSERT image retrieved from imagePath
+            this.DisplayViewImage.Image = _getImage(imageName,DisplayViewImage.Width, DisplayViewImage.Height);
+
+            //SET _imageManipulator to the imageManipulator we are going to use:
+            _imageManipulator = imageManip;
         }
 
         private void DisplayReturn(object sender, EventArgs e)
