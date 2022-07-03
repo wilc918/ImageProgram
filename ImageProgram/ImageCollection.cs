@@ -194,6 +194,7 @@ namespace ImageProgram
                 //For each image in the gallery, a collectionPictureBox is produced and an image fit for it is retrieved.
                 foreach (string file in _galleryImageNames) 
                 {
+                    
                     collectionPictureBox pictureBox = (collectionPictureBox)_pictureBoxFactory.MakePictureBox();
                     pictureBox.Image = _ModelData.getImage(file, pictureBox.Width,pictureBox.Height);
                     Debug.WriteLine("Image Filename: "+file);
@@ -255,6 +256,7 @@ namespace ImageProgram
             {
                 ContextMenuStrip pbMenu = menuItem.Owner as ContextMenuStrip;
                 PictureBox pbDelete = pbMenu.SourceControl as PictureBox;
+                _imageData.RemoveImage(pbDelete.Tag.ToString());
                 pbDelete.Image.Dispose();
                 pbDelete.Dispose();
                 RefreshImages();

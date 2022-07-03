@@ -27,6 +27,12 @@ namespace ImageProgram
         /// <param name="Key">Used to identify item</param>
         void RemoveItem(int Key);
 
+        /// <summary>
+        /// Method - Removes Image from List
+        /// </summary>
+        /// <param name="Key">Used to identify Image</param>
+        void RemoveImage(string Key);
+
         //Loads an image
         //Image LoadImage(Image image);
 

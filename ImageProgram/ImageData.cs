@@ -64,7 +64,11 @@ namespace ImageProgram
         /// <param name="Key">Key for identification</param>
         public void RemoveItem(int Key) 
         {
-        
+            
+        }
+
+        public void RemoveImage(string Key) {
+            _displayData.Remove(Key);
         }
         
         /// <summary>
@@ -86,6 +90,8 @@ namespace ImageProgram
         /// <returns>the unique identifiers of the images that have been loaded</returns>
         public IList<String> load(IList<String> pathfilenames)
         {
+            //IList<String> _imageNames = new List<String>();
+            _imageNames.Clear();
             //The key is the file name, value is the file path.
             // Loop through the submitted filepaths and add them to the file dictionary, if they aren't already present!
             for (int i = 0; i < pathfilenames.Count; i++)
@@ -96,33 +102,15 @@ namespace ImageProgram
                     //_displayData.TryGetValue
                     //Add to the dictionary the file name and the file path.
                     _displayData.Add(Path.GetFileName(pathfilenames[i]), pathfilenames[i]);
+                    _imageNames.Add(Path.GetFileName(pathfilenames[i]));
                 }
 
 
             }
 
-            _imageNames = new List<String>(_displayData.Keys);
-
             //We return the full list of keys, that we can loop through to get the file names
             return _imageNames;
         }
-        //public IList<String> load(IList<String> pathfilenames)
-        //{
-        //    _pathfilenames = pathfilenames;
-        //    for (int i=0; i<_pathfilenames.Count; i++) 
-        //    {
-        //        //Create new DataElement, call it element:
-        //        DataElement element = new DataElement();
-        //        //Store image into element:
-        //        element.Initialise(Bitmap.FromFile(Path.GetFullPath(_pathfilenames[i])));
-        //        // Add element to _data with key:
-        //        _data.Add(i, element);
-        //    }
-
-        //    _imageNames = new List<String>(_data.Keys);
-
-        //    return ima
-        //}
 
         /// <summary>
         /// Retrieve the appropiate image
