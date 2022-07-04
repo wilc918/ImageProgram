@@ -68,15 +68,9 @@ namespace ImageProgram
             ImageFactory imageProc = new ImageFactory(false);
 
             //Debug.WriteLine("File name and path: "+Path.);
-
-            imageProc.Save(fileDestination);
+            imageProc.Load(image).Save(fileDestination);
+            //imageProc.Save(fileDestination);
             imageProc.Dispose();
-        }
-
-        public void SaveFile(Image image)
-        {
-            //string fileName = Path.
-            //Debug.WriteLine("Filepath from fileName"+Path.GetDirectoryName());
         }
     }
 }

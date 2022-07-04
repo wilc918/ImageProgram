@@ -16,31 +16,10 @@ namespace ImageProgram
     public interface IImageData
     {
         /// <summary>
-        /// Method - Adds Item To List
+        /// Method - Removes Item from list
         /// </summary>
-        /// <param name="Key">Used to identify item</param>
-       void AddItem(int Key);
-
-        /// <summary>
-        /// Method - Removes Item From List
-        /// </summary>
-        /// <param name="Key">Used to identify item</param>
-        void RemoveItem(int Key);
-
-        /// <summary>
-        /// Method - Removes Image from List
-        /// </summary>
-        /// <param name="Key">Used to identify Image</param>
-        void RemoveImage(string Key);
-
-        //Loads an image
-        //Image LoadImage(Image image);
-
-        /// <summary>
-        /// Method - Retrieves the imageList.
-        /// </summary>
-        /// <returns>List of images for the gallery</returns>
-        IList<String> GetCollectionList();
+        /// <param name="Key">Name of Item to be removed</param>
+        void RemoveItem(string Key);
 
     }
 }

@@ -4,15 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace ImageProgram
 {
-    abstract public class PictureBoxFactory : IPictureBoxFactory
+    public class CollectionPictureBoxFactory : PictureBoxFactory
     {
-        public virtual PictureBox MakePictureBox() 
-        {
-            PictureBox pictureBox = new PictureBox();
+        PictureBox pictureBox;
 
+        public override PictureBox MakePictureBox() {
+            pictureBox = new collectionPictureBox();
             return pictureBox;
         }
     }

@@ -52,8 +52,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GalleryPictureBox.cs" />
+    <Compile Include="DisplayEventArgs.cs" />
+    <Compile Include="DisplayPictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="PictureBoxFactory.cs" />
+    <Compile Include="CollectionPictureBoxFactory.cs" />
     <Compile Include="collectionPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>

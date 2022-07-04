@@ -27,15 +27,6 @@ namespace ImageProgram
         // DECLARE an IImageData to access ImageData, call it _imageData:
         private IImageData _imageData;
 
-        // DECLARE a form for ImageSelection, call it _imageSelectForm:
-       // private Form _imageSelectForm;
-
-        //DECLARE an int to store the value for the next displayView, call it _displayKey, set to 0:
-        int _displayKey = 0;
-
-        //DECLARE an int to store the set number, call it _setKey, set to 0:
-        int _setKey = 0;
-
         //DECLARE a List<String> to contain the names of the images in the gallery, call it galleryImagesNames
         private IList<String> _galleryImageNames;
 
@@ -56,6 +47,12 @@ namespace ImageProgram
 
         //Declare an IPictureBoxFactory for storing a PictureBoxFactory
         private IPictureBoxFactory _pictureBoxFactory;
+
+        //DECLARE an IDictionary to store displayViews in, call it _displayViews:
+        private IDictionary<int, DisplayView> _displayViews;
+
+        //DECLARE an int to store the value for the next displayView, call it _displayKey, set to 0:
+        private int _displayKey = 0;
 
         /// <summary>
         /// CONSTRUCTOR - ImageCollection Form Object Constructor
@@ -84,9 +81,9 @@ namespace ImageProgram
 
             _galleryImageNames = new List<string>();
 
+            _displayViews = new Dictionary<int, DisplayView>();
             
             //Adding FlowLayoutPanel
-           // collectionflowLayoutPanel = new FlowLayoutPanel();
             collectionflowLayoutPanel.FlowDirection = FlowDirection.LeftToRight;
             collectionflowLayoutPanel.Name = "CollectionLayout";
             ImageCollectPanel.Controls.Add(collectionflowLayoutPanel);
@@ -109,45 +106,6 @@ namespace ImageProgram
         #region Private Methods
 
 
-
-        /// <summary>
-        /// Method - Retrieve and display the next image in the collection
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ImageCollectionNext(object sender, EventArgs e) 
-        {
-            //Checks if there are images to fill the next set
-            if (_images.Count > (_setKey + 9))
-            {
-                // Increase set
-                _setKey = _setKey + 9;
-                Debug.WriteLine("imageCount: " + _images.Count + " Set Key: " + _setKey);
-                RefreshImages();
-            }
-
-        }
-
-        /// <summary>
-        /// Method - Retrieve and display the previous image from the collection
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ImageCollectionPrevious(object sender, EventArgs e) 
-        {
-            if (_images.Count > 9 & _setKey > 0)
-            {
-                _setKey = _setKey - 9;
-
-                RefreshImages();
-                //collectionflowLayoutPanel.Controls[1].Visible = false;
-                //int visibleBtns = collectionflowLayoutPanel.Controls.Count;
-                //Debug.WriteLine("visibleButtons = " + visibleBtns);
-            }
-
-        }
-
-            
 
             /// <summary>
             /// Loads an image according path associated with the _imageKey
@@ -208,39 +166,6 @@ namespace ImageProgram
                     _pictureBoxes.Add(_pictureBoxes.Count, pictureBox);
                     collectionflowLayoutPanel.Controls.Add(pictureBox);
                 }
-
-
-                
-                /*
-                foreach (String file in galleryFile.FileNames)
-                {
-                    try
-                    {
-                        String fileString = file;
-                        _galleryImageNames.Add(fileString);
-                        Debug.WriteLine("Image filepath: " + fileString);
-                        //_images.Add(_images.Count, Image.FromFile(file));
-                        collectionPictureBox pictureBox = (collectionPictureBox)_pictureBoxFactory.MakePictureBox();
-                        _ModelData.load(_galleryImageNames);
-                        //PictureBox pictureBox = new PictureBox();
-                        pictureBox.Tag = _pictureBoxes.Count;
-                        //pictureBox.Size = new Size(150, 111);
-                        pictureBox.setClick(new EventHandler(ImageClick));
-                        pictureBox.ContextMenuStrip = contextMenuStrip1;
-                        //pictureBox.Click += new EventHandler(ImageClick);
-                        pictureBox.DoubleClick += new EventHandler(ImageDoubleClick);
-                       // pictureBox.Image = _ModelData.getImage(_ModelData);
-                        pictureBox.Image = Image.FromFile(_galleryImageNames[_galleryImageNames.Count-1]);
-                        //pictureBox.Image = _images[_images.Count-1];
-
-                        _pictureBoxes.Add(_pictureBoxes.Count, pictureBox);
-                        collectionflowLayoutPanel.Controls.Add(pictureBox);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Key not found"+ex);
-                    }
-                }*/
                 RefreshImages();
 
             }
@@ -256,7 +181,7 @@ namespace ImageProgram
             {
                 ContextMenuStrip pbMenu = menuItem.Owner as ContextMenuStrip;
                 PictureBox pbDelete = pbMenu.SourceControl as PictureBox;
-                _imageData.RemoveImage(pbDelete.Tag.ToString());
+                _imageData.RemoveItem(pbDelete.Tag.ToString());
                 pbDelete.Image.Dispose();
                 pbDelete.Dispose();
                 RefreshImages();
@@ -286,8 +211,6 @@ namespace ImageProgram
 
         private void ImageDoubleClick(object sender, EventArgs e) {
 
-            
-
             //Cast selected image as PictureBox so that I have access to the methods of PictureBox, call it chosenImage:
             PictureBox chosenImage = (PictureBox)sender;
             Debug.WriteLine("ImageLocation is: " + chosenImage.ImageLocation);
@@ -297,17 +220,14 @@ namespace ImageProgram
             {
                 Debug.WriteLine("Image clicked is: " + chosenImage.Image);
                 Debug.WriteLine("PictureBox.Tag is: " + chosenImage.Tag);
-                //DisplayView displayImage = new DisplayView(chosenImage.Image, _imageManipulator);
                 
-                DisplayView displayImage = new DisplayView();
-                displayImage.Initialise(_ModelData.getImage, chosenImage.Tag.ToString(), _imageManipulator);
-                
+                DisplayView displayView = new DisplayView();
+                displayView.Initialise(_displayKey,_ModelData.getImage, chosenImage.Tag.ToString(), _imageManipulator);
+
+                _displayViews.Add(_displayKey, displayView);
+                _displayKey++;
             }
 
-            
-            //Create display view using chosenImage, call it displayImage:
-           // DisplayView displayImage = new DisplayView(chosenImage.Image);
-            //displayImage.Show();
         }
         #endregion
         #region Circular Adder
@@ -336,10 +256,5 @@ namespace ImageProgram
             return _cCounter;
         }
         #endregion
-
-        private void PictureDisplay1_MouseDown(object sender, MouseEventArgs e)
-        {
-            ImageClick(sender, e);
-        }
     }
 }

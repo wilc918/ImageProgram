@@ -65,12 +65,12 @@ namespace ImageProgram
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.deleteImageToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(144, 26);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 48);
             // 
             // deleteImageToolStripMenuItem
             // 
             this.deleteImageToolStripMenuItem.Name = "deleteImageToolStripMenuItem";
-            this.deleteImageToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.deleteImageToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.deleteImageToolStripMenuItem.Text = "Delete Image";
             this.deleteImageToolStripMenuItem.Click += new System.EventHandler(this.RemoveImagesButtonsClick);
             // 

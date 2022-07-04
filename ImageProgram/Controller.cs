@@ -25,11 +25,10 @@ namespace ImageProgram
             IServiceLocator factoryLocator = new FactoryLocator();
 
             //Instantiate a Dictionary<int, Image> for the program gallery to store its images in, store it as an IDictionary and call it galleryItems:
-            // IDictionary<int, Image> galleryItems = new Dictionary<int, Image>();
             IDictionary<int, Image> galleryItems = (factoryLocator.Get<IDictionary<int, Image>>() as IFactory<IDictionary<int, Image>>).Create<Dictionary<int, Image>>();
 
             //Instantiate a Dictionary<int, List<Image>> for the program gallery to store its image and their name in, store it as an IDictionary and call it galleryItems2:
-            //IDictionary<int, List<Image>> galleryItems2 = (factoryLocator.Get<IDictionary<int, List<Image>>>() as IFactory<IDictionary<int, List<Image>>>).Create<Dictionary<int, List<Image
+        
             IDictionary<int, String> galleryItems2 = (factoryLocator.Get<IDictionary<int, String>>() as IFactory<IDictionary<int, String>>).Create<Dictionary<int, String>>();
 
             //Instantiate a Dictionary<int, Image> for the program gallery to store its images in, store it as an IDictionary and call it galleryItems:
@@ -41,7 +40,7 @@ namespace ImageProgram
             IImageData imageData = (factoryLocator.Get<IImageData>() as IFactory<IImageData>).Create<ImageData>();
 
             //Instantiate a pictureBoxFactory
-            IPictureBoxFactory pictureBoxFactory = (factoryLocator.Get<IPictureBoxFactory>() as IFactory<IPictureBoxFactory>).Create<PictureBoxFactory>();
+            IPictureBoxFactory pictureBoxFactory = (factoryLocator.Get<IPictureBoxFactory>() as IFactory<IPictureBoxFactory>).Create<CollectionPictureBoxFactory>();
             
 
             // Run the ImageCollectionForm with imageData injected
