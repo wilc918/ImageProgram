@@ -33,13 +33,20 @@ namespace ImageProgram
             this.RotRight = new System.Windows.Forms.Button();
             this.RotLeft = new System.Windows.Forms.Button();
             this.DispScale = new System.Windows.Forms.Button();
-            this.ScaleInput = new System.Windows.Forms.TextBox();
             this.DispExit = new System.Windows.Forms.Button();
             this.DispSave = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.FlipButton = new System.Windows.Forms.Button();
+            this.PercentageNumeric = new System.Windows.Forms.NumericUpDown();
+            this.PercentageScaleLabel = new System.Windows.Forms.Label();
+            this.HeightNumeric = new System.Windows.Forms.NumericUpDown();
+            this.HeightScaleLable = new System.Windows.Forms.Label();
+            this.WidthNumeric = new System.Windows.Forms.NumericUpDown();
+            this.WidthScaleLabel = new System.Windows.Forms.Label();
+            this.setDimensionsButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DisplayViewImage)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PercentageNumeric)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.HeightNumeric)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WidthNumeric)).BeginInit();
             this.SuspendLayout();
             // 
             // DisplayViewImage
@@ -57,8 +64,8 @@ namespace ImageProgram
             // 
             // RotRight
             // 
-            this.RotRight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.RotRight.Location = new System.Drawing.Point(151, 500);
+            this.RotRight.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.RotRight.Location = new System.Drawing.Point(404, 500);
             this.RotRight.Name = "RotRight";
             this.RotRight.Size = new System.Drawing.Size(75, 40);
             this.RotRight.TabIndex = 1;
@@ -68,8 +75,8 @@ namespace ImageProgram
             // 
             // RotLeft
             // 
-            this.RotLeft.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.RotLeft.Location = new System.Drawing.Point(15, 500);
+            this.RotLeft.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.RotLeft.Location = new System.Drawing.Point(220, 500);
             this.RotLeft.Name = "RotLeft";
             this.RotLeft.Size = new System.Drawing.Size(75, 40);
             this.RotLeft.TabIndex = 2;
@@ -80,22 +87,13 @@ namespace ImageProgram
             // DispScale
             // 
             this.DispScale.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.DispScale.Location = new System.Drawing.Point(151, 577);
+            this.DispScale.Location = new System.Drawing.Point(139, 604);
             this.DispScale.Name = "DispScale";
-            this.DispScale.Size = new System.Drawing.Size(75, 40);
+            this.DispScale.Size = new System.Drawing.Size(43, 20);
             this.DispScale.TabIndex = 3;
             this.DispScale.Text = "Scale";
             this.DispScale.UseVisualStyleBackColor = true;
             this.DispScale.Click += new System.EventHandler(this.ImageScale);
-            // 
-            // ScaleInput
-            // 
-            this.ScaleInput.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.ScaleInput.Location = new System.Drawing.Point(15, 588);
-            this.ScaleInput.Name = "ScaleInput";
-            this.ScaleInput.Size = new System.Drawing.Size(75, 20);
-            this.ScaleInput.TabIndex = 4;
-            this.ScaleInput.Text = "Amount";
             // 
             // DispExit
             // 
@@ -119,35 +117,145 @@ namespace ImageProgram
             this.DispSave.UseVisualStyleBackColor = true;
             this.DispSave.Click += new System.EventHandler(this.ImageSave);
             // 
-            // button1
+            // FlipButton
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button1.Location = new System.Drawing.Point(80, 626);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "Flip";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.ImageFlip);
+            this.FlipButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.FlipButton.Location = new System.Drawing.Point(311, 509);
+            this.FlipButton.Name = "FlipButton";
+            this.FlipButton.Size = new System.Drawing.Size(75, 23);
+            this.FlipButton.TabIndex = 7;
+            this.FlipButton.Text = "Flip!";
+            this.FlipButton.UseVisualStyleBackColor = true;
+            this.FlipButton.Click += new System.EventHandler(this.ImageFlip);
             // 
-            // numericUpDown1
+            // PercentageNumeric
             // 
-            this.numericUpDown1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.numericUpDown1.Location = new System.Drawing.Point(0, 562);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
-            this.numericUpDown1.TabIndex = 8;
+            this.PercentageNumeric.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.PercentageNumeric.Location = new System.Drawing.Point(77, 606);
+            this.PercentageNumeric.Maximum = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
+            this.PercentageNumeric.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.PercentageNumeric.Name = "PercentageNumeric";
+            this.PercentageNumeric.Size = new System.Drawing.Size(45, 20);
+            this.PercentageNumeric.TabIndex = 8;
+            this.PercentageNumeric.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            // 
+            // PercentageScaleLabel
+            // 
+            this.PercentageScaleLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.PercentageScaleLabel.AutoSize = true;
+            this.PercentageScaleLabel.Location = new System.Drawing.Point(14, 608);
+            this.PercentageScaleLabel.Name = "PercentageScaleLabel";
+            this.PercentageScaleLabel.Size = new System.Drawing.Size(65, 13);
+            this.PercentageScaleLabel.TabIndex = 9;
+            this.PercentageScaleLabel.Text = "Percentage:";
+            // 
+            // HeightNumeric
+            // 
+            this.HeightNumeric.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.HeightNumeric.InterceptArrowKeys = false;
+            this.HeightNumeric.Location = new System.Drawing.Point(44, 550);
+            this.HeightNumeric.Maximum = new decimal(new int[] {
+            5000,
+            0,
+            0,
+            0});
+            this.HeightNumeric.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.HeightNumeric.Name = "HeightNumeric";
+            this.HeightNumeric.Size = new System.Drawing.Size(53, 20);
+            this.HeightNumeric.TabIndex = 10;
+            this.HeightNumeric.ThousandsSeparator = true;
+            this.HeightNumeric.Value = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            // 
+            // HeightScaleLable
+            // 
+            this.HeightScaleLable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.HeightScaleLable.AutoSize = true;
+            this.HeightScaleLable.Location = new System.Drawing.Point(5, 552);
+            this.HeightScaleLable.Name = "HeightScaleLable";
+            this.HeightScaleLable.Size = new System.Drawing.Size(41, 13);
+            this.HeightScaleLable.TabIndex = 11;
+            this.HeightScaleLable.Text = "Height:";
+            // 
+            // WidthNumeric
+            // 
+            this.WidthNumeric.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.WidthNumeric.Location = new System.Drawing.Point(44, 572);
+            this.WidthNumeric.Maximum = new decimal(new int[] {
+            5000,
+            0,
+            0,
+            0});
+            this.WidthNumeric.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.WidthNumeric.Name = "WidthNumeric";
+            this.WidthNumeric.Size = new System.Drawing.Size(53, 20);
+            this.WidthNumeric.TabIndex = 12;
+            this.WidthNumeric.ThousandsSeparator = true;
+            this.WidthNumeric.Value = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            // 
+            // WidthScaleLabel
+            // 
+            this.WidthScaleLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.WidthScaleLabel.AutoSize = true;
+            this.WidthScaleLabel.Location = new System.Drawing.Point(8, 574);
+            this.WidthScaleLabel.Name = "WidthScaleLabel";
+            this.WidthScaleLabel.Size = new System.Drawing.Size(38, 13);
+            this.WidthScaleLabel.TabIndex = 13;
+            this.WidthScaleLabel.Text = "Width:";
+            // 
+            // setDimensionsButton
+            // 
+            this.setDimensionsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.setDimensionsButton.Location = new System.Drawing.Point(103, 550);
+            this.setDimensionsButton.Name = "setDimensionsButton";
+            this.setDimensionsButton.Size = new System.Drawing.Size(79, 42);
+            this.setDimensionsButton.TabIndex = 14;
+            this.setDimensionsButton.Text = "Set Dimensions";
+            this.setDimensionsButton.UseVisualStyleBackColor = true;
+            this.setDimensionsButton.Click += new System.EventHandler(this.ImageResize);
             // 
             // DisplayView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(684, 661);
-            this.Controls.Add(this.numericUpDown1);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.setDimensionsButton);
+            this.Controls.Add(this.PercentageNumeric);
+            this.Controls.Add(this.WidthNumeric);
+            this.Controls.Add(this.WidthScaleLabel);
+            this.Controls.Add(this.HeightNumeric);
+            this.Controls.Add(this.HeightScaleLable);
+            this.Controls.Add(this.PercentageScaleLabel);
+            this.Controls.Add(this.FlipButton);
             this.Controls.Add(this.DispSave);
             this.Controls.Add(this.DispExit);
-            this.Controls.Add(this.ScaleInput);
             this.Controls.Add(this.DispScale);
             this.Controls.Add(this.RotLeft);
             this.Controls.Add(this.RotRight);
@@ -156,7 +264,9 @@ namespace ImageProgram
             this.Name = "DisplayView";
             this.Text = "DisplayView";
             ((System.ComponentModel.ISupportInitialize)(this.DisplayViewImage)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PercentageNumeric)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.HeightNumeric)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WidthNumeric)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -168,10 +278,15 @@ namespace ImageProgram
         private System.Windows.Forms.Button RotRight;
         private System.Windows.Forms.Button RotLeft;
         private System.Windows.Forms.Button DispScale;
-        private System.Windows.Forms.TextBox ScaleInput;
         private System.Windows.Forms.Button DispExit;
         private System.Windows.Forms.Button DispSave;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.Button FlipButton;
+        private System.Windows.Forms.NumericUpDown PercentageNumeric;
+        private System.Windows.Forms.Label PercentageScaleLabel;
+        private System.Windows.Forms.NumericUpDown HeightNumeric;
+        private System.Windows.Forms.Label HeightScaleLable;
+        private System.Windows.Forms.NumericUpDown WidthNumeric;
+        private System.Windows.Forms.Label WidthScaleLabel;
+        private System.Windows.Forms.Button setDimensionsButton;
     }
 }

@@ -65,35 +65,40 @@ namespace ImageProgram
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.deleteImageToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 48);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(144, 26);
             // 
             // deleteImageToolStripMenuItem
             // 
             this.deleteImageToolStripMenuItem.Name = "deleteImageToolStripMenuItem";
-            this.deleteImageToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.deleteImageToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
             this.deleteImageToolStripMenuItem.Text = "Delete Image";
             this.deleteImageToolStripMenuItem.Click += new System.EventHandler(this.RemoveImagesButtonsClick);
             // 
             // ImageCollectPanel
             // 
+            this.ImageCollectPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.ImageCollectPanel.Controls.Add(this.collectionflowLayoutPanel);
             this.ImageCollectPanel.Location = new System.Drawing.Point(12, 12);
             this.ImageCollectPanel.Name = "ImageCollectPanel";
             this.ImageCollectPanel.Size = new System.Drawing.Size(476, 356);
             this.ImageCollectPanel.TabIndex = 14;
+            this.ImageCollectPanel.Controls.Add(this.collectionflowLayoutPanel);
             // 
             // collectionflowLayoutPanel
             // 
-            this.collectionflowLayoutPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.collectionflowLayoutPanel.AutoScroll = true;
             this.collectionflowLayoutPanel.AutoSize = true;
             this.collectionflowLayoutPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.collectionflowLayoutPanel.Location = new System.Drawing.Point(12, 12);
+            this.collectionflowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.collectionflowLayoutPanel.Location = new System.Drawing.Point(0, 0);
             this.collectionflowLayoutPanel.Name = "collectionflowLayoutPanel";
-            this.collectionflowLayoutPanel.Size = new System.Drawing.Size(475, 375);
+            this.collectionflowLayoutPanel.Size = new System.Drawing.Size(476, 356);
             this.collectionflowLayoutPanel.TabIndex = 0;
+            this.collectionflowLayoutPanel.VerticalScroll.Visible = false;
+            this.collectionflowLayoutPanel.HorizontalScroll.Visible = false;
+
             // 
             // ImageCollection
             // 

@@ -49,25 +49,34 @@ namespace ImageProgram
 
 
 
-            this.Show();
+
             DisplayViewImage.SizeMode = PictureBoxSizeMode.Zoom;
+            Debug.WriteLine("HeightNumeric Value: "+HeightNumeric.Value);
+            //HeightNumeric.Controls[0].Visible = false;
+            this.Show();
         }
 
         public DisplayView()
         {
             InitializeComponent();
             Debug.WriteLine("DisplayView Launched!");
+            removeNumericArrows();
             this.Show();
         }
 
-        public void Initialise(string fileName, RetrieveImageDelegate retrieveImage, string imageName, IImageManipulator imageManip)
+        public void Initialise(string fileName, RetrieveImageDelegate retrieveImage, IImageManipulator imageManip)
         {
+            //Set _fileName to the fileName of the image being loaded
             _fileName = fileName;
             Debug.WriteLine("This Display View is displaying: " + fileName);
             //SET _getImagePath to retrieveImage
             _getImage += retrieveImage;
             //INSERT image retrieved from imagePath
-            _image = _getImage(imageName, DisplayViewImage.Width, DisplayViewImage.Height);
+            _image = _getImage(fileName, DisplayViewImage.Width, DisplayViewImage.Height);
+            //Set Numeric Values to the images equivelant for user reference.
+            HeightNumeric.Value = _image.Height;
+            WidthNumeric.Value = _image.Width;
+            //Display Image on the DisplayViewImage PictureBox
             this.DisplayViewImage.Image = _image;
 
             //SET _imageManipulator to the imageManipulator we are going to use:
@@ -83,62 +92,97 @@ namespace ImageProgram
             _imageManipulator = imageManip;
         }
 
-        private void DisplayReturn(object sender, EventArgs e)
-        {
-            //Dispose of the image before closing the form
-            //DisplayViewImage.Image.Dispose();
-            this.Close();
-        }
-
+        #region ImageTransformationMethods
+        /// <summary>
+        /// Method - For rotating image clockwise 90 degrees.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ImageRotateRight(object sender, EventArgs e) 
         {
-            //DisplayViewImage.Image.RotateFlip(RotateFlipType.Rotate90FlipNone);
             DisplayViewImage.Image = _imageManipulator.Rotate(DisplayViewImage.Image, 90);
             DisplayViewImage.Refresh();
         }
+        /// <summary>
+        /// Method - For rotating image anti-clockwise 90 degrees.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ImageRotateLeft(object sender, EventArgs e)
         {
-            //DisplayViewImage.Image.RotateFlip(RotateFlipType.Rotate270FlipNone);
             DisplayViewImage.Image = _imageManipulator.Rotate(DisplayViewImage.Image, -90);
             DisplayViewImage.Refresh();
         }
-
+        /// <summary>
+        /// Method - Flips image along the vertical axis.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ImageFlip(object sender, EventArgs e)
         {
-            // Thumbnail does not update, image contained within however is updated despite the cancel button being clicked.
-            // I should make the display view create a new instance rather than use a direct reference to the original
-            // The save button will then apply this clone to the original image which can be seen in the thumbnail.
-            //DisplayViewImage.Image.RotateFlip(RotateFlipType.RotateNoneFlipX);
             DisplayViewImage.Image = _imageManipulator.Flip(DisplayViewImage.Image, false);
             DisplayViewImage.Refresh();
         }
-
+        /// <summary>
+        /// Method - Scales image according to amount inputed into PercentageNumeric
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ImageScale(object sender, EventArgs e)
         {
-            //double scaleAmount = Int32.Parse(ScaleInput.Text);
-            double scaleAmount = ((double)numericUpDown1.Value/100);
-            Debug.WriteLine("ScaleAmount: " + scaleAmount + "/n ImageWidth: " + (DisplayViewImage.Image.Width*scaleAmount) + "/n ImageHeight: " + (DisplayViewImage.Image.Height*scaleAmount));
+            //For the scaleAmount the value is divided by 100 to get the percentage and cast to a double as numerics provide decimals too
+            double scaleAmount = ((double)PercentageNumeric.Value / 100);
+            // Check that scale amount is more than 0.001 because while Resize doesn't allow 0 it does allow negative numbers and that isn't desired.
+            if (scaleAmount > 0.001)
+            {
+                Debug.WriteLine("ScaleAmount: " + scaleAmount + "/n ImageWidth: " + (DisplayViewImage.Image.Width * scaleAmount) + "/n ImageHeight: " + (DisplayViewImage.Image.Height * scaleAmount));
+                try
+                {
+                    int newWidth = (int)Math.Round((double)DisplayViewImage.Width * scaleAmount);
+                    int newHeight = (int)Math.Round((double)DisplayViewImage.Height * scaleAmount);
+                    DisplayViewImage.Image = _imageManipulator.Resize(DisplayViewImage.Image, new Size(newWidth, newHeight));
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                    MessageBox.Show("Please do not enter 0!");
+                }
+            }
+            else 
+            {
+                MessageBox.Show("PLease do not enter a number less or equal to 0!");
+            }
+
+        }
+        /// <summary>
+        /// Method - Resizes image according to values inputed to Numeric controls.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ImageResize(object sender, EventArgs e)
+        {
             try
             {
-                int newWidth = (int)Math.Round((double) DisplayViewImage.Width*scaleAmount);
-                int newHeight = (int)Math.Round((double) DisplayViewImage.Height*scaleAmount);
-                DisplayViewImage.Image = _imageManipulator.Resize(DisplayViewImage.Image, new Size(newWidth, newHeight));
+                DisplayViewImage.Image = _imageManipulator.Resize(DisplayViewImage.Image, new Size((int)WidthNumeric.Value, (int)HeightNumeric.Value));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
-                MessageBox.Show("PLease do not enter a number below 0!");
+                Debug.WriteLine("Exception: "+ex);
             }
-            
         }
-
+        /// <summary>
+        /// Method for saving image.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ImageSave(object sender, EventArgs e) 
         {
             Debug.WriteLine("Image filepath: "+DisplayViewImage.ImageLocation);
+            //Create new SaveFileDialog which enables the user to choose where to save their image.
             SaveFileDialog dlg = new SaveFileDialog();
             dlg.Filter = "JPEG (*.jpg;)|*.jpg|PNG (*.png)|*.png|GIF (*.gif)|*.gif";
             dlg.Title = "Save an Image file";
-
+            //When the user decides to save, check that a filename has been chosen and use _imageManipulator to save image at desination.
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 if (dlg.FileName != "") 
@@ -149,5 +193,27 @@ namespace ImageProgram
                 Debug.WriteLine("Save filepath: " + dlg.FileName);
             }
         }
+        #endregion
+        #region personalMethods
+        /// <summary>
+        /// Method to remove ugly arrows from numericUpDown controls
+        /// </summary>
+        private void removeNumericArrows()
+        {
+            HeightNumeric.Controls[0].Visible = false;
+            WidthNumeric.Controls[0].Visible = false;
+        }
+
+        /// <summary>
+        /// Method for closing this displayView
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DisplayReturn(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        #endregion
     }
 }

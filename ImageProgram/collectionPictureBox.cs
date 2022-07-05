@@ -10,6 +10,7 @@ namespace ImageProgram
 {
     public class collectionPictureBox : PictureBox
     {
+        ContextMenuStrip _menuStrip;
         public collectionPictureBox() 
         {
            this.BorderStyle = BorderStyle.FixedSingle;
@@ -18,23 +19,33 @@ namespace ImageProgram
            this.Size = new Size(150, 111);
         }
 
-        public void setClick(EventHandler ev) 
+        public collectionPictureBox intialise() {
+            
+
+            return this;
+        }
+
+        public collectionPictureBox setClick(EventHandler ev) 
         {
             this.Click += ev;
+            return this;
         }
 
-        public void setDoubleClick(EventHandler ev) 
+        public collectionPictureBox setDoubleClick(EventHandler ev) 
         {
             this.DoubleClick += ev;
+            return this;
         }
-        public void setContextMenu(ContextMenuStrip contextMenuStrip) 
+        public collectionPictureBox setContextMenu(ContextMenuStrip contextMenuStrip) 
         { 
             this.ContextMenuStrip = contextMenuStrip;
+            return this;
         }
 
-        public void setImage(String image)
+        public collectionPictureBox setImage(String image)
         {
             this.ImageLocation = image;
+            return this;
         }
 
     }
