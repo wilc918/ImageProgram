@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -11,68 +10,37 @@ using System.Threading.Tasks;
 namespace ImageProgram
 {
     /// <summary>
-    /// Class - Contains information relating to the images
+    /// Class - Handles the storage and retrieval of Image data.
     /// 
     /// (Calum Wilkinson)
     /// (10/03/2021)
     /// </summary>
     class ImageData : IModel, IImageData
     {
-        //DECLARE a string to store the path for images, call it _imagePath:
-        private const string _imagePath = "..\\..\\FishAssets\\";
-
-        //DECLARE a List<String> to store a list of path+filename for all available image files, called _imageNameList:
-        private IList<String> _imageNames;
-        private IList<String> _imageNames2;
-
         //DECLARE a Dictionary<int,DataElement> to store images to be displayed in, call it _displayData:
         private IDictionary<string, string> _displayData;
-
-        private ConcurrentDictionary<int, string> _conDisplayData;
 
         //Declare a Dictionary<int,DataElement> to store DataElements in, call it _dataElements:
         private IDictionary<string, DataElement> _imageElements;
 
+        /// <summary>
+        /// Constructor for objects of type ImageData
+        /// </summary>
         public ImageData()
         {
-            //Instantiate _displayData
+            //Instantiate _displayData:
             _displayData = new Dictionary<string, string>();
-
-            _conDisplayData = new ConcurrentDictionary<int, string>();
-
-            // Instantiate _data:
-            _imageNames = new List<String>();
-            _imageNames2 = new List<String>();
-
+            //Instantiate _imageElements:
             _imageElements = new Dictionary<string, DataElement>();
         }
 
         #region Implementation of IImageData
-
-        public void AddItem(string Key) {
-            DataElement element = new DataElement();
-            element.Initialise(Bitmap.FromFile(Path.GetFullPath(_imageNames2)));// Change the _imageNames2[Key] placeholder
-
-            _imageElements.Add(Key, element);
-        }
-
         /// <summary>
-        /// Removes Image from 
+        /// Removes Image;
         /// </summary>
-        /// <param name="Key"></param>
+        /// <param name="Key">The file name.</param>
         public void RemoveItem(string Key) {
             _imageElements.Remove(Key);
-            _displayData.Remove(Key);
-        }
-        
-        /// <summary>
-        /// Method - Getter, retrieve _imageNames list.
-        /// </summary>
-        /// <returns>Names of images</returns>
-        public IList<String> GetCollectionList()
-        {
-            //Return ImageNames
-            return _imageNames;
         }
         #endregion
 
@@ -84,37 +52,28 @@ namespace ImageProgram
         /// <returns>the unique identifiers of the images that have been loaded</returns>
         public IList<String> load(IList<String> pathfilenames)
         {
+            IList<String> imageNames = new List<String>();
 
-            _imageNames.Clear();
-            //The key is the file name, value is the file path.
             // Loop through the submitted filepaths and add them to the file dictionary, if they aren't already present!
             for (int i = 0; i < pathfilenames.Count; i++)
             {
-
-                if (!_displayData.ContainsKey(Path.GetFileName((pathfilenames[i])))) //check for key
+                //Checks for new images and stores them in DataElements:
+                if (!_imageElements.ContainsKey(Path.GetFileName(pathfilenames[i])))
                 {
+
                     DataElement element = new DataElement();
-                    element.Initialise(Bitmap.FromFile(Path.GetFullPath(pathfilenames[i])));// Change the _imageNames2[Key] placeholder
+                    element.Initialise(Bitmap.FromFile(Path.GetFullPath(pathfilenames[i])));
 
                     _imageElements.Add(Path.GetFileName(pathfilenames[i]), element);
 
-                    //Add to the dictionary the file name and the file path.
-                    _displayData.Add(Path.GetFileName(pathfilenames[i]), pathfilenames[i]);
-                    _imageNames.Add(Path.GetFileName(pathfilenames[i]));
-                    //_imageNames2.Add(Path.GetFileName(pathfilenames[i]));
-                }
-                //Check that the image isn't already contained to prevent duplicates:
-                if (!_imageNames2.Contains(Path.GetFileName(pathfilenames[i])))
-                {
-                    _imageNames2.Add(Path.GetFileName(pathfilenames[i]));
-                    //Debug.WriteLine("Contains doesn't search values");
+                    imageNames.Add(Path.GetFileName(pathfilenames[i]));
                 }
 
 
             }
 
             //We return the full list of keys, that we can loop through to get the file names
-            return _imageNames;
+            return imageNames;
         }
 
         /// <summary>
@@ -125,7 +84,8 @@ namespace ImageProgram
         /// <param name="frameHeight">height of the container for the image</param>
         /// <returns></returns>
         public Image getImage(String key, int frameWidth, int frameHeight) {
-            Image requestedImage = Bitmap.FromFile(Path.GetFullPath(_displayData[key]));
+            Image requestedImage = _imageElements[key].RetrieveImage();
+            //Produce thumbnail images for large images in small frames:
             if ((frameHeight < 300 || frameWidth < 300) && (requestedImage.Width > frameWidth || requestedImage.Height > frameHeight))
             {
                 return requestedImage.GetThumbnailImage(frameWidth, frameHeight, ()=>false, IntPtr.Zero);

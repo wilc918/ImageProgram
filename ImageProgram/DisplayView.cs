@@ -60,9 +60,10 @@ namespace ImageProgram
             this.Show();
         }
 
-        public void Initialise(int id, RetrieveImageDelegate retrieveImage, string imageName, IImageManipulator imageManip)
+        public void Initialise(string fileName, RetrieveImageDelegate retrieveImage, string imageName, IImageManipulator imageManip)
         {
-            _id = id;
+            _fileName = fileName;
+            Debug.WriteLine("This Display View is displaying: " + fileName);
             //SET _getImagePath to retrieveImage
             _getImage += retrieveImage;
             //INSERT image retrieved from imagePath
@@ -142,7 +143,7 @@ namespace ImageProgram
             {
                 if (dlg.FileName != "") 
                 {
-                    _imageManipulator.SaveFile(DisplayViewImage.Image, _fileName, dlg.FileName);
+                    _imageManipulator.SaveFile(DisplayViewImage.Image, dlg.FileName);
                 }
 
                 Debug.WriteLine("Save filepath: " + dlg.FileName);

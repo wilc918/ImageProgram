@@ -30,13 +30,12 @@ namespace ImageProgram
         //DECLARE a List<String> to contain the names of the images in the gallery, call it galleryImagesNames
         private IList<String> _galleryImageNames;
 
-        //DECLARE a Dictionary<int, DataElement> to store images in, call it _images:
-        private IDictionary<int, Image> _images;
-
         //private FlowLayoutPanel collectionflowLayoutPanel;
 
         //DECLARE a Dictionary<int, DataElement> to store images in, call it _images:
         private IDictionary<int, PictureBox> _pictureBoxes;
+        private IDictionary<string, PictureBox> _pictureBoxes2;
+        private IDictionary<PictureBox, string> _pictureBoxes3;
 
         //DECLARE a Dictionary<string, PictureBox> to store associate images with their picturebox
 
@@ -68,14 +67,13 @@ namespace ImageProgram
             //Instantiate _ModelData, casting ImageData as the type IModel:
             _ModelData = ImageData as IModel;
 
-            //Instantiate images Dictionary
-            _images = imageContainer;
-
             _pictureBoxFactory = pictureBoxFactory;
 
             _pictureBoxes = pictureBoxContainer;
 
-            //_pictureBoxes = new Dictionary<int, PictureBox>();
+            _pictureBoxes2 = new Dictionary<string, PictureBox>();
+
+            _pictureBoxes3 = new Dictionary<PictureBox, string>();
 
             _imageManipulator = imageManip;
 
@@ -164,6 +162,8 @@ namespace ImageProgram
                     pictureBox.AccessibleName = file;
 
                     _pictureBoxes.Add(_pictureBoxes.Count, pictureBox);
+                    _pictureBoxes2.Add(file, pictureBox);
+                    _pictureBoxes3.Add(pictureBox, file);
                     collectionflowLayoutPanel.Controls.Add(pictureBox);
                 }
                 RefreshImages();
@@ -189,13 +189,13 @@ namespace ImageProgram
         }
 
         /// <summary>
-        /// Method - Retrieve images from image list and inserts them into their associated picturebox.
+        /// Method - Changes pictureBoxes background color back to default.
         /// </summary>
         private void RefreshImages() {
-
-            Debug.WriteLine("Imagecount is" + _images.Count);
-            for (int j = 0; j < _pictureBoxes.Count; j++) {
-                _pictureBoxes[j].BackColor = Color.FromKnownColor(KnownColor.Control);
+            //For each entry in _pictureBoxes, change the PictureBox's colour to the default color.
+            foreach (KeyValuePair<PictureBox,string> entry in _pictureBoxes3)
+            {
+                entry.Key.BackColor = Color.FromKnownColor(KnownColor.Control);
             }
         }
 
@@ -222,7 +222,7 @@ namespace ImageProgram
                 Debug.WriteLine("PictureBox.Tag is: " + chosenImage.Tag);
                 
                 DisplayView displayView = new DisplayView();
-                displayView.Initialise(_displayKey,_ModelData.getImage, chosenImage.Tag.ToString(), _imageManipulator);
+                displayView.Initialise(_pictureBoxes3[chosenImage],_ModelData.getImage, chosenImage.Tag.ToString(), _imageManipulator);
 
                 _displayViews.Add(_displayKey, displayView);
                 _displayKey++;

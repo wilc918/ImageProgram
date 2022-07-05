@@ -17,6 +17,6 @@ namespace ImageProgram
 
         Image Flip(Image image, bool flipVertically);
 
-        void SaveFile(Image image, string fileName, string fileDestination );
+        void SaveFile(Image image, string fileDestination );
     }
 }
