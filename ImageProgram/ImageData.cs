@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace ImageProgram
 {
     /// <summary>
-    /// Class - Handles the storage and retrieval of Image data.
+    /// Class - Handles a collection of Image data.
     /// 
     /// (Calum Wilkinson)
     /// (10/03/2021)
@@ -38,27 +38,58 @@ namespace ImageProgram
             _imageElements = new Dictionary<string, DataElement>();
         }
 
-        #region Implementation of IImageData
 
+
+        #region Implementation of IImageData
+        /// <summary>
+        /// Call rotateImage on the selected item.
+        /// </summary>
+        /// <param name="key">Name of the item.</param>
+        /// <param name="degrees">The amount to rotate by.</param>
+        public void RotateImage(string key, int degrees)
+        {
+            _imageElements[key].RotateImage(degrees);
+        }
+
+        public void FlipImage(string key, bool vertically)
+        {
+            _imageElements[key].FlipImage(vertically);
+        }
+
+        public void ScaleImage(string key, int scale)
+        {
+            _imageElements[key].RetrieveImage2(new Size(scale, scale));
+        }
+
+        public void ResizeImage(string key, int width, int height)
+        {
+            _imageElements[key].RetrieveImage2(new Size((int)width, (int)height));
+        }
+
+        public void SaveImage(string key, string fileDestination)
+        {
+            _imageElements[key].SaveImage(fileDestination);
+        }
 
         /// <summary>
-        /// Removes Image;
+        /// Remove Item from list.
         /// </summary>
-        /// <param name="Key">The file name.</param>
-        public void RemoveItem(string Key) {
-            _imageElements.Remove(Key);
+        /// <param name="key"></param>
+        public void RemoveItem(string key) {
+            _imageElements[key].Dispose();
+            _imageElements.Remove(key);
         }
         #endregion
 
         #region Implementation of IEventPublisher
-        public void Subscribe(string Key, EventHandler<DisplayEventArgs> listener)
+        public void Subscribe(string key, EventHandler<DisplayEventArgs> listener)
         {
-            (_imageElements[Key] as IInternalEventPublisher).Subscribe(listener);
+            (_imageElements[key] as IInternalEventPublisher).Subscribe(listener);
         }
 
-        public void Unsubscribe(string Key, EventHandler<DisplayEventArgs> listener)
+        public void Unsubscribe(string key, EventHandler<DisplayEventArgs> listener)
         {
-            (_imageElements[Key] as IInternalEventPublisher).Unsubscribe(listener);
+            (_imageElements[key] as IInternalEventPublisher).Unsubscribe(listener);
         }
         #endregion
 

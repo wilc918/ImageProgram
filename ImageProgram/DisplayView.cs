@@ -18,47 +18,30 @@ namespace ImageProgram
     /// </summary>
     public partial class DisplayView : Form, IEventListener
     {
-        // Declare an int _id, stores the ID given to this view:
+        // DECLARE an int _id, stores the ID given to this view:
         private int _id = 0;
-        // Declare an Image to store image in, call it _image:
+        // DECLARE an Image to store image in, call it _image:
         private Image _image;
-        // Declare a string to store fileName in
+        // DECLARE a string to store fileName in
         private string _fileName;
 
-        // Declare an IImageManipulator to store the ImageManipulator class, call it _imageManipulator
+        // DECLARE an IImageManipulator to store the ImageManipulator class, call it _imageManipulator
         private IImageManipulator _imageManipulator;
 
-        // Declare a RetrieveImageDelegate for the delegate to be called to retrieve Image, call it _getImage
-        private RetrieveImageDelegate _getImage;
-
-        // Declare an ExecuteCommandDelegate to store the delegate used for executing commands:
+        // DECLARE an ExecuteCommandDelegate to store the delegate used for executing commands:
         private ExecuteCommandDelegate _execute;
 
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public DisplayView(Image currentImage, IImageManipulator imageManip)
-        {
-            InitializeComponent();
-            Debug.WriteLine("DisplayView Launched!");
+        //DECLARE an RetrieveImageDelegate to store the delegate used for retrieving images:
+        private RetrieveImageDelegate _retrieveImage;
 
-            //SET image to image to be edited:
-            _image = currentImage;
-            //SET _imageManipulator to the imageManipulator we are going to use:
-            _imageManipulator = imageManip;
+        // DECLARE an RotateImageDelegate to call Rotation on the image:
+        private RotateImageDelegate _rotateImage;
 
-            //Set the displayViewImage to show the image we are editing:
-            //Creating a clone of the image so we can make changes without consequence.
-            DisplayViewImage.Image = (Image)_image.Clone();
+        //DECLARE a FlipImageDelegate to call Flip on the image:
+        private FlipImageDelegate _flipImage;
 
-
-
-
-            DisplayViewImage.SizeMode = PictureBoxSizeMode.Zoom;
-            Debug.WriteLine("HeightNumeric Value: "+HeightNumeric.Value);
-            //HeightNumeric.Controls[0].Visible = false;
-            this.Show();
-        }
+        //DECLARE a SaveImageDelegate to call Save on the image:
+        private SaveImageDelegate _saveImage;
 
         public DisplayView()
         {
@@ -68,34 +51,21 @@ namespace ImageProgram
             this.Show();
         }
 
-        //public void Initialise(string fileName, RetrieveImageDelegate retrieveImage, IImageManipulator imageManip)
-        //{
-        //    //Set _fileName to the fileName of the image being loaded
-        //    _fileName = fileName;
-        //    Debug.WriteLine("This Display View is displaying: " + fileName);
-        //    //SET _getImagePath to retrieveImage
-        //    _getImage += retrieveImage;
-        //    //INSERT image retrieved from imagePath
-        //    _image = _getImage(fileName, DisplayViewImage.Width, DisplayViewImage.Height);
-        //    //Set Numeric Values to the images equivelant for user reference.
-        //    HeightNumeric.Value = _image.Height;
-        //    WidthNumeric.Value = _image.Width;
-        //    //Display Image on the DisplayViewImage PictureBox
-        //    this.DisplayViewImage.Image = _image;
-
-        //    //SET _imageManipulator to the imageManipulator we are going to use:
-        //    _imageManipulator = imageManip;
-        //}
-
-        public void Initialise(string fileName, RetrieveImageDelegate retrieveImage, IImageManipulator imageManip)
+        public void Initialise(string fileName, RetrieveImageDelegate retrieveImage, RotateImageDelegate rotateImage, FlipImageDelegate flipImage, SaveImageDelegate saveImage)
         {
             _fileName = fileName;
 
-            //SET image:
-            retrieveImage(_fileName, this.DisplayViewImage.Width, this.DisplayViewImage.Height);
+            _retrieveImage = retrieveImage;
 
-            //SET _imageManipulator to the imageManipulator we are going to use:
-            _imageManipulator = imageManip;
+            //SET image:
+            //Retrieve image according to the display size:
+            retrieveImage(_fileName, this.DisplayViewImage.Width, this.DisplayViewImage.Height);
+            //SET _rotateImage to the RotateImageDelegate:
+            _rotateImage = rotateImage;
+            //SET _flipImage to the FlipImageDelegate:
+            _flipImage = flipImage;
+            //SET _saveImage to the SaveImageDelegate:
+            _saveImage = saveImage;
         }
 
         //public void Initialise(string fileName, ExecuteCommandDelegate execute, Action retrieveImage, IImageManipulator imageManip)
@@ -110,8 +80,6 @@ namespace ImageProgram
         //    _imageManipulator = imageManip;
         //}
 
-
-
         #region ImageTransformationMethods
         /// <summary>
         /// Method - For rotating image clockwise 90 degrees.
@@ -120,7 +88,7 @@ namespace ImageProgram
         /// <param name="e"></param>
         private void ImageRotateRight(object sender, EventArgs e) 
         {
-            DisplayViewImage.Image = _imageManipulator.Rotate(DisplayViewImage.Image, 90);
+            _rotateImage(_fileName, 90);
             DisplayViewImage.Refresh();
         }
         /// <summary>
@@ -130,7 +98,7 @@ namespace ImageProgram
         /// <param name="e"></param>
         private void ImageRotateLeft(object sender, EventArgs e)
         {
-            DisplayViewImage.Image = _imageManipulator.Rotate(DisplayViewImage.Image, -90);
+            _rotateImage(_fileName, -90);
             DisplayViewImage.Refresh();
         }
         /// <summary>
@@ -140,7 +108,7 @@ namespace ImageProgram
         /// <param name="e"></param>
         private void ImageFlip(object sender, EventArgs e)
         {
-            DisplayViewImage.Image = _imageManipulator.Flip(DisplayViewImage.Image, false);
+            _flipImage(_fileName, false);
             DisplayViewImage.Refresh();
         }
         /// <summary>
@@ -160,7 +128,7 @@ namespace ImageProgram
                 {
                     int newWidth = (int)Math.Round((double)DisplayViewImage.Width * scaleAmount);
                     int newHeight = (int)Math.Round((double)DisplayViewImage.Height * scaleAmount);
-                    DisplayViewImage.Image = _imageManipulator.Resize(DisplayViewImage.Image, new Size(newWidth, newHeight));
+                    _retrieveImage(_fileName, newWidth, newHeight);
                 }
                 catch (Exception ex)
                 {
@@ -183,7 +151,7 @@ namespace ImageProgram
         {
             try
             {
-                DisplayViewImage.Image = _imageManipulator.Resize(DisplayViewImage.Image, new Size((int)WidthNumeric.Value, (int)HeightNumeric.Value));
+                _retrieveImage(_fileName, (int)WidthNumeric.Value, (int)HeightNumeric.Value);
             }
             catch (Exception ex)
             {
@@ -197,7 +165,7 @@ namespace ImageProgram
         /// <param name="e"></param>
         private void ImageSave(object sender, EventArgs e) 
         {
-            Debug.WriteLine("Image filepath: "+DisplayViewImage.ImageLocation);
+            //Debug.WriteLine("Image filepath: "+DisplayViewImage.ImageLocation);
             //Create new SaveFileDialog which enables the user to choose where to save their image.
             SaveFileDialog dlg = new SaveFileDialog();
             dlg.Filter = "JPEG (*.jpg;)|*.jpg|PNG (*.png)|*.png|GIF (*.gif)|*.gif";
@@ -207,7 +175,8 @@ namespace ImageProgram
             {
                 if (dlg.FileName != "") 
                 {
-                    _imageManipulator.SaveFile(DisplayViewImage.Image, dlg.FileName);
+                    _saveImage(_fileName, dlg.FileName);
+                    //_imageManipulator.SaveFile(DisplayViewImage.Image, dlg.FileName);
                 }
 
                 Debug.WriteLine("Save filepath: " + dlg.FileName);
@@ -231,7 +200,6 @@ namespace ImageProgram
         /// <param name="e"></param>
         private void DisplayReturn(object sender, EventArgs e)
         {
-            //CODE THAT unsubscribes the displayView HERE
             this.Close();
         }
 

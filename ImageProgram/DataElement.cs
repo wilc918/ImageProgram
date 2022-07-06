@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 namespace ImageProgram
 {
     /// <summary>
-    /// Class - Used for the storage and retrieval of Images
+    /// Class - Used for the storage, modification, retrieval and disposal of individual Images.
     /// 
     /// (Calum Wilkinson)
-    /// (10/03/2021)
+    /// (06/07/2022)
     /// </summary>
     class DataElement : IDataElement, IInternalEventPublisher, IDisposable
     {
@@ -51,11 +51,31 @@ namespace ImageProgram
             OnNewImageInput(_imageManipulator.Resize(_image, rqdImageSize));
         }
 
+
+        public void FlipImage(bool vertically)
+        {
+            ChangeImage(_imageManipulator.Flip(_image, vertically));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="degrees">The amount the image is to be rotated by.</param>
+        public void RotateImage(int degrees)
+        {
+            ChangeImage(_imageManipulator.Rotate(_image, degrees));
+        }
+
         public void ChangeImage(Image newImage)
         {
             _image = newImage;
 
             OnNewImageInput(_image);
+        }
+
+        public void SaveImage(string fileDestination)
+        {
+            _imageManipulator.SaveFile(_image, fileDestination);
         }
 
         #endregion
@@ -70,7 +90,7 @@ namespace ImageProgram
             _displayEvent -= listener;
         }
 
-        #region IDisposable
+        #region Implementation of IDisposable
         /// <summary>
         /// Call dispose on the image;
         /// </summary>

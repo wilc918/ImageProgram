@@ -14,15 +14,15 @@ namespace ImageProgram
         /// <summary>
         /// Subscribe a listener to displayViewEvents.
         /// </summary>
-        /// <param name="Key"></param>
+        /// <param name="Key">Represents what the listener wants to subscribe to.</param>
         /// <param name="Handler">Reference to the listener method</param>
-        void Subscribe(string Key, EventHandler<DisplayEventArgs> Listener);
+        void Subscribe(string key, EventHandler<DisplayEventArgs> listener);
 
         /// <summary>
-        /// Unsubscribe a listener to displayViewEvents.
+        /// Unsubscribe a listener from displayViewEvents.
         /// </summary>
-        /// <param name="Key"></param>
-        /// <param name="Handler"></param>
-        void Unsubscribe(string Key, EventHandler<DisplayEventArgs> Listener);
+        /// <param name="key">Represents what the listener wants to unsubscribe from.</param>
+        /// <param name="listener">Reference to the listener method</param>
+        void Unsubscribe(string key, EventHandler<DisplayEventArgs> listener);
     }
 }

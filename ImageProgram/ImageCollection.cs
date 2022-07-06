@@ -204,7 +204,7 @@ namespace ImageProgram
 
                 (_imageData as IEventPublisher).Subscribe(_imageWithin[chosenPictureBox], displayView.OnNewInput);
 
-                displayView.Initialise(_imageWithin[chosenPictureBox], _ModelData.getImage, _imageManipulator);
+                displayView.Initialise(_imageWithin[chosenPictureBox], _ModelData.getImage, _imageData.RotateImage, _imageData.FlipImage, _imageData.SaveImage);
                 //Add to _displayViews and increment ready for next displayView
                 _displayViews.Add(_displayKey, displayView);
                 _displayKey++;
