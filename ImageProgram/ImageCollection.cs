@@ -105,16 +105,22 @@ namespace ImageProgram
                 {
                     
                     collectionPictureBox pictureBox = (collectionPictureBox)_pictureBoxFactory.MakePictureBox();
-                    pictureBox.Image = _ModelData.getImage(file, pictureBox.Width,pictureBox.Height);
+                    //pictureBox.Image = _ModelData.getImage(file, pictureBox.Width,pictureBox.Height);
+                    //_ModelData.getImage(file, pictureBox.Width, pictureBox.Height);
+                    _imageWithin.Add(pictureBox, file);
+                   // (_imageData as IEventPublisher).Subscribe(_imageWithin[pictureBox], pictureBox.OnNewInput);
+
+                    (_imageData as IEventPublisher).Subscribe(file, pictureBox.OnNewInput);
+                    pictureBox.Initialise(file, _ModelData.getImage);
                     Debug.WriteLine("Image Filename: "+file);
 
-                    pictureBox = pictureBox.setClick(new EventHandler(PresentPictureBox_Click))
-                                            .setContextMenu(contextMenuStrip1)
-                                            .setDoubleClick(new EventHandler(AddDisplayView_DoubleClick));
+                    pictureBox = pictureBox.SetClick(new EventHandler(PresentPictureBox_Click))
+                                            .SetContextMenu(contextMenuStrip1)
+                                            .SetDoubleClick(new EventHandler(AddDisplayView_DoubleClick));
 
                     pictureBox.AccessibleName = file;
 
-                    _imageWithin.Add(pictureBox, file);
+                    //(_imageData as IEventPublisher).Unsubscribe(file, pictureBox.OnNewInput);
                     collectionflowLayoutPanel.Controls.Add(pictureBox);
                 }
                 ResetPictureBoxes();
@@ -132,16 +138,23 @@ namespace ImageProgram
             if (MessageBox.Show("Delete this image?", "Delete Image", MessageBoxButtons.OKCancel)==DialogResult.OK)
             {
                 //Retrieve PictureBox from the selectedMenuItem using multiple casts to call getter methods to retrieve parent for each child.
-                PictureBox entryToBeRemoved = ((ContextMenuStrip)((ToolStripItem)sender).Owner).SourceControl as PictureBox;
+                collectionPictureBox entryToBeRemoved = ((ContextMenuStrip)((ToolStripItem)sender).Owner).SourceControl as collectionPictureBox;
                 //Dispose the entry
                 DisposeEntry(entryToBeRemoved);
-                //
                 //ResetPictureBoxes();
             }
         }
-        private void DisposeEntry(PictureBox target) 
+        /// <summary>
+        /// Method - Handles the disposal of the entry
+        /// </summary>
+        /// <param name="target">Entry to be disposed of</param>
+        private void DisposeEntry(collectionPictureBox target) 
         {
+            //Unsubscribe the entry from image being referenced:
+            (_imageData as IEventPublisher).Unsubscribe(_imageWithin[target], target.OnNewInput);
+            //Dispose of the Image being referenced:
             _imageData.RemoveItem(_imageWithin[target]);
+            //Dispose of the image within the pictureBox and the pictureBox itself:
             target.Image.Dispose();
             target.Dispose();
         }
@@ -185,8 +198,13 @@ namespace ImageProgram
             {
                 //DisplayView displayView = new DisplayView();
                 DisplayView displayView = _displayViewFactory.Create<DisplayView>() as DisplayView;
-                //Initialise the display View with the image filename, a delegate for retrieving image and imageManipulator
-                displayView.Initialise(_imageWithin[chosenPictureBox],_ModelData.getImage, _imageManipulator);
+                ////Initialise the display View with the image filename, a delegate for retrieving image and imageManipulator
+                //displayView.Initialise(_imageWithin[chosenPictureBox],_ModelData.getImage, _imageManipulator);
+                
+
+                (_imageData as IEventPublisher).Subscribe(_imageWithin[chosenPictureBox], displayView.OnNewInput);
+
+                displayView.Initialise(_imageWithin[chosenPictureBox], _ModelData.getImage, _imageManipulator);
                 //Add to _displayViews and increment ready for next displayView
                 _displayViews.Add(_displayKey, displayView);
                 _displayKey++;

@@ -20,7 +20,7 @@ namespace ImageProgram
         /// </summary>
         /// <param name="text">Text</param>
         /// <param name="image">Image</param>
-        void Initialise(Image image);
+        void Initialise(Image image, IImageManipulator imageManipulator);
 
         /// <summary>
         /// Retrieve the image.

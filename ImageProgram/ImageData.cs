@@ -15,13 +15,17 @@ namespace ImageProgram
     /// (Calum Wilkinson)
     /// (10/03/2021)
     /// </summary>
-    class ImageData : IModel, IImageData
+    class ImageData : IModel, IImageData, IEventPublisher
     {
         //DECLARE a Dictionary<int,DataElement> to store images to be displayed in, call it _displayData:
         private IDictionary<string, string> _displayData;
 
         //Declare a Dictionary<int,DataElement> to store DataElements in, call it _dataElements:
         private IDictionary<string, DataElement> _imageElements;
+
+        //DECLARE an IImageManipulator to store ImageManipulator in, call it _imageMan:
+        private IImageManipulator _imageManipulator;
+       
 
         /// <summary>
         /// Constructor for objects of type ImageData
@@ -35,6 +39,8 @@ namespace ImageProgram
         }
 
         #region Implementation of IImageData
+
+
         /// <summary>
         /// Removes Image;
         /// </summary>
@@ -44,9 +50,27 @@ namespace ImageProgram
         }
         #endregion
 
+        #region Implementation of IEventPublisher
+        public void Subscribe(string Key, EventHandler<DisplayEventArgs> listener)
+        {
+            (_imageElements[Key] as IInternalEventPublisher).Subscribe(listener);
+        }
+
+        public void Unsubscribe(string Key, EventHandler<DisplayEventArgs> listener)
+        {
+            (_imageElements[Key] as IInternalEventPublisher).Unsubscribe(listener);
+        }
+        #endregion
+
+        public void InjectManipulator(IImageManipulator imageManipulator) 
+        {
+            _imageManipulator = imageManipulator;
+        
+        }
+
         #region Implementing IModel
         /// <summary>
-        /// Load the media items pointed to by 'pathfilenames' into the 'Model'
+        /// Method - Load the media items pointed to by 'pathfilenames' into the 'Model'
         /// </summary>
         /// <param name="pathfilenames">list of strings, each contains filename/path for loading</param>
         /// <returns>the unique identifiers of the images that have been loaded</returns>
@@ -62,7 +86,7 @@ namespace ImageProgram
                 {
 
                     DataElement element = new DataElement();
-                    element.Initialise(Bitmap.FromFile(Path.GetFullPath(pathfilenames[i])));
+                    element.Initialise(Bitmap.FromFile(Path.GetFullPath(pathfilenames[i])), _imageManipulator);
 
                     _imageElements.Add(Path.GetFileName(pathfilenames[i]), element);
 
@@ -77,19 +101,23 @@ namespace ImageProgram
         }
 
         /// <summary>
-        /// Retrieve the appropiate image
+        /// Method - Return a copy of the image specified by 'key', scaled according to the dimentsions of the visual container (ie frame) it will be viewed in.
         /// </summary>
-        /// <param name="key">Filename</param>
-        /// <param name="frameWidth">width of the container for the image</param>
-        /// <param name="frameHeight">height of the container for the image</param>
-        /// <returns></returns>
+        /// <param name="key">the unique identifier for the image to be returned</param>
+        /// <param name="frameWidth">the width (in pixels) of the 'frame' it is to occupy</param>
+        /// <param name="frameHeight">the height (in pixles) of the 'frame' it is to occupy</param>
+        /// <returns>the Image pointed identified by key</returns>
         public Image getImage(String key, int frameWidth, int frameHeight) {
             Image requestedImage = _imageElements[key].RetrieveImage();
+            _imageElements[key].RetrieveImage2(new Size(frameWidth, frameHeight));
             //Produce thumbnail images for large images in small frames:
             if ((frameHeight < 300 || frameWidth < 300) && (requestedImage.Width > frameWidth || requestedImage.Height > frameHeight))
             {
+
                 return requestedImage.GetThumbnailImage(frameWidth, frameHeight, ()=>false, IntPtr.Zero);
             }
+
+            
             //By entering the file name, which is our key for our dictionary, we should get the full path.
             return requestedImage;
         }

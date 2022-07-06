@@ -30,6 +30,9 @@ namespace ImageProgram
             //Instantiate an imageManipulator, store as IImageManipulator and call it imageManip:
             IImageManipulator imageManip = (factoryLocator.Get<IImageManipulator>() as IFactory<IImageManipulator>).Create<ImageManipulator>();
 
+            //Inject imageManipulator into imageData
+            imageData.InjectManipulator(imageManip);
+
             //Instantiate a Dictionary<PictureBox, string> for the UI to store fileNames in, store it as IDictionary and call it imageCollection:
             IDictionary<PictureBox, string> imageCollection = (factoryLocator.Get<IDictionary<PictureBox, string>>() as IFactory<IDictionary<PictureBox, string>>).Create<Dictionary<PictureBox, string>>();
 
@@ -44,6 +47,15 @@ namespace ImageProgram
 
             // Run the ImageCollectionForm with imageData injected
             Application.Run(new ImageCollection(imageData, imageManip, imageCollection, pictureBoxFactory, displayViewFactory));
+        }
+
+        /// <summary>
+        /// Implementation of ExecuteCommand Delegate
+        /// </summary>
+        /// <param name="command">The Command to be executed.</param>
+        public void ExecuteCommand(ICommand command)
+        {
+            command.Execute();
         }
 
 

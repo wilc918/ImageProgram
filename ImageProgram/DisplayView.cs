@@ -16,7 +16,7 @@ namespace ImageProgram
     /// (Calum Wilkinson)
     /// (28/04/2021)
     /// </summary>
-    public partial class DisplayView : Form
+    public partial class DisplayView : Form, IEventListener
     {
         // Declare an int _id, stores the ID given to this view:
         private int _id = 0;
@@ -24,11 +24,15 @@ namespace ImageProgram
         private Image _image;
         // Declare a string to store fileName in
         private string _fileName;
+
         // Declare an IImageManipulator to store the ImageManipulator class, call it _imageManipulator
         private IImageManipulator _imageManipulator;
+
         // Declare a RetrieveImageDelegate for the delegate to be called to retrieve Image, call it _getImage
         private RetrieveImageDelegate _getImage;
 
+        // Declare an ExecuteCommandDelegate to store the delegate used for executing commands:
+        private ExecuteCommandDelegate _execute;
 
         /// <summary>
         /// Constructor
@@ -64,33 +68,49 @@ namespace ImageProgram
             this.Show();
         }
 
+        //public void Initialise(string fileName, RetrieveImageDelegate retrieveImage, IImageManipulator imageManip)
+        //{
+        //    //Set _fileName to the fileName of the image being loaded
+        //    _fileName = fileName;
+        //    Debug.WriteLine("This Display View is displaying: " + fileName);
+        //    //SET _getImagePath to retrieveImage
+        //    _getImage += retrieveImage;
+        //    //INSERT image retrieved from imagePath
+        //    _image = _getImage(fileName, DisplayViewImage.Width, DisplayViewImage.Height);
+        //    //Set Numeric Values to the images equivelant for user reference.
+        //    HeightNumeric.Value = _image.Height;
+        //    WidthNumeric.Value = _image.Width;
+        //    //Display Image on the DisplayViewImage PictureBox
+        //    this.DisplayViewImage.Image = _image;
+
+        //    //SET _imageManipulator to the imageManipulator we are going to use:
+        //    _imageManipulator = imageManip;
+        //}
+
         public void Initialise(string fileName, RetrieveImageDelegate retrieveImage, IImageManipulator imageManip)
         {
-            //Set _fileName to the fileName of the image being loaded
             _fileName = fileName;
-            Debug.WriteLine("This Display View is displaying: " + fileName);
-            //SET _getImagePath to retrieveImage
-            _getImage += retrieveImage;
-            //INSERT image retrieved from imagePath
-            _image = _getImage(fileName, DisplayViewImage.Width, DisplayViewImage.Height);
-            //Set Numeric Values to the images equivelant for user reference.
-            HeightNumeric.Value = _image.Height;
-            WidthNumeric.Value = _image.Width;
-            //Display Image on the DisplayViewImage PictureBox
-            this.DisplayViewImage.Image = _image;
+
+            //SET image:
+            retrieveImage(_fileName, this.DisplayViewImage.Width, this.DisplayViewImage.Height);
 
             //SET _imageManipulator to the imageManipulator we are going to use:
             _imageManipulator = imageManip;
         }
 
-        public void Intialise(Image image, IImageManipulator imageManip)
-        {
-            //INSERT image retrieved from imagePath
-            this.DisplayViewImage.Image = _image;
+        //public void Initialise(string fileName, ExecuteCommandDelegate execute, Action retrieveImage, IImageManipulator imageManip)
+        //{
+        //    _fileName = fileName;
+        //    _execute = execute;
 
-            //SET _imageManipulator to the imageManipulator we are going to use:
-            _imageManipulator = imageManip;
-        }
+        //    ICommand getImage = new Command(retrieveImage);
+        //    _execute(getImage);
+
+        //    //SET _imageManipulator to the imageManipulator we are going to use:
+        //    _imageManipulator = imageManip;
+        //}
+
+
 
         #region ImageTransformationMethods
         /// <summary>
@@ -211,7 +231,26 @@ namespace ImageProgram
         /// <param name="e"></param>
         private void DisplayReturn(object sender, EventArgs e)
         {
+            //CODE THAT unsubscribes the displayView HERE
             this.Close();
+        }
+
+        #endregion
+
+        #region Implementation of IEventListener
+        /// <summary>
+        /// Method - Updates DisplayViewImage in response to new inputs.
+        /// </summary>
+        /// <param name="sender">The DataElement sending the new input</param>
+        /// <param name="args">The new input</param>
+        public void OnNewInput(object sender, DisplayEventArgs args)
+        {
+            if (args.image != null)
+            {
+                this.DisplayViewImage.Image = args.image;
+                HeightNumeric.Value = this.DisplayViewImage.Image.Height;
+                WidthNumeric.Value = this.DisplayViewImage.Image.Width;
+            }
         }
 
         #endregion

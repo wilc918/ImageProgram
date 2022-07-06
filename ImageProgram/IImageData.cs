@@ -21,5 +21,11 @@ namespace ImageProgram
         /// <param name="Key">Name of Item to be removed</param>
         void RemoveItem(string Key);
 
+        /// <summary>
+        /// Method - Inserts imageManipulator
+        /// </summary>
+        /// <param name="imageManipulator">ImageManipulator to inserted.</param>
+        void InjectManipulator(IImageManipulator imageManipulator);
+
     }
 }
