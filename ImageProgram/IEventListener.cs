@@ -8,6 +8,9 @@ namespace ImageProgram
 {
     /// <summary>
     /// Enforce implementation of event handler
+    /// 
+    /// Author (Calum Wilkinson)
+    /// Version (07/07/2022)
     /// </summary>
     interface IEventListener
     {
@@ -16,6 +19,6 @@ namespace ImageProgram
         /// </summary>
         /// <param name="source">Source of the call.</param>
         /// <param name="args">The event.</param>
-        void OnNewInput(object source, DisplayEventArgs args);
+        void OnNewInput(object source, ImageEventArgs args);
     }
 }

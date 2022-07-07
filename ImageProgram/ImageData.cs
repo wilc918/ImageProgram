@@ -13,22 +13,20 @@ namespace ImageProgram
     /// Class - Handles a collection of Image data.
     /// 
     /// (Calum Wilkinson)
-    /// (10/03/2021)
+    /// (07/07/2022)
     /// </summary>
     class ImageData : IModel, IImageData, IEventPublisher
     {
-        //DECLARE a Dictionary<string, string> to store fileNames and filePaths, call it _displayData:
+        // DECLARE a Dictionary<string, string> to store fileNames and filePaths, call it _displayData:
         private IDictionary<string, string> _displayData;
 
-        //Declare a Dictionary<string,DataElement> to store DataElements in, call it _imageElements:
+        // DECLARE a Dictionary<string,DataElement> to store DataElements in, call it _imageElements:
         private IDictionary<string, DataElement> _imageElements;
 
-        //DECLARE a Dictionary<PictureBox, string> to store PictureBoxes in, call it _pictureBoxes:
-        private IDictionary<string, DisplayView> _displayViews;
-
-        //DECLARE an IImageManipulator to store ImageManipulator in, call it _imageMan:
+        // DECLARE an IImageManipulator to store ImageManipulator in, call it _imageMan:
         private IImageManipulator _imageManipulator;
 
+        // DECLARE an IServiceLocator for factories, call it _factoryLocator:
         private IServiceLocator _factoryLocator;
 
         /// <summary>
@@ -38,59 +36,30 @@ namespace ImageProgram
         {
             //Instantiate _displayData:
             _displayData = new Dictionary<string, string>();
+
             //Instantiate _imageElements:
             _imageElements = new Dictionary<string, DataElement>();
         }
 
-
-
         #region Implementation of IImageData
 
+        /// <summary>
+        /// Method - Retrieves DataElement associated with filename string.
+        /// </summary>
+        /// <param name="key">Filename paired with DataElement</param>
+        /// <returns>DataElement associated with filename</returns>
         public IDataElement RetrieveItem(string key)
         {
+            // Returns the DataElement associated with key:
            return _imageElements[key];
 
         }
 
-        /// <summary>
-        /// Call rotateImage on the selected item.
-        /// </summary>
-        /// <param name="key">Name of the item.</param>
-        /// <param name="degrees">The amount to rotate by.</param>
-        public void RotateImage(string key, int degrees)
-        {
-            _imageElements[key].RotateImage(degrees);
-        }
-
-        public void FlipImage(string key, bool vertically)
-        {
-            _imageElements[key].FlipImage(vertically);
-        }
-
-        public void ScaleImage(string key, int scale)
-        {
-            _imageElements[key].RetrieveImage(new Size(scale, scale));
-        }
-
-        public void ResizeImage(string key, int width, int height)
-        {
-            _imageElements[key].RetrieveImage(new Size((int)width, (int)height));
-        }
-
-        public void SaveImage(string key, string fileDestination)
-        {
-            _imageElements[key].SaveImage(fileDestination);
-        }
-
-        public void AddDisplay(string fileName, DisplayView display) 
-        {
-            _displayViews.Add(fileName, display);
-        }
 
         /// <summary>
-        /// Remove Item from list.
+        /// METHOD - Remove Item from list.
         /// </summary>
-        /// <param name="key"></param>
+        /// <param name="key">Filename paired with DataElement</param>
         public void RemoveItem(string key) {
             _imageElements[key].Dispose();
             _imageElements.Remove(key);
@@ -98,25 +67,35 @@ namespace ImageProgram
         #endregion
 
         #region Implementation of IEventPublisher
-        public void Subscribe(string key, EventHandler<DisplayEventArgs> listener)
+        public void Subscribe(string key, EventHandler<ImageEventArgs> listener)
         {
             (_imageElements[key] as IInternalEventPublisher).Subscribe(listener);
         }
 
-        public void Unsubscribe(string key, EventHandler<DisplayEventArgs> listener)
+        public void Unsubscribe(string key, EventHandler<ImageEventArgs> listener)
         {
             (_imageElements[key] as IInternalEventPublisher).Unsubscribe(listener);
         }
         #endregion
 
+        /// <summary>
+        /// METHOD - Injects ImageManipulator into this class for use on image.
+        /// </summary>
+        /// <param name="imageManipulator"></param>
         public void InjectManipulator(IImageManipulator imageManipulator) 
         {
+            // SET _imageManipulator:
             _imageManipulator = imageManipulator;
         
         }
 
+        /// <summary>
+        /// METHOD - Injects FactoryLocator into this class.
+        /// </summary>
+        /// <param name="factoryLocator">Produces and keeps track of factories.</param>
         public void InjectFactoryLocator(IServiceLocator factoryLocator)
         {
+            // SET _factoryLocator:
             _factoryLocator = factoryLocator;
         }
 
@@ -128,6 +107,7 @@ namespace ImageProgram
         /// <returns>the unique identifiers of the images that have been loaded</returns>
         public IList<String> load(IList<String> pathfilenames)
         {
+            // Create new list<String> to hold imageNames in:
             IList<String> imageNames = new List<String>();
 
             // Loop through the submitted filepaths and add them to the file dictionary, if they aren't already present!
@@ -136,19 +116,23 @@ namespace ImageProgram
                 //Checks for new images and stores them in DataElements:
                 if (!_imageElements.ContainsKey(Path.GetFileName(pathfilenames[i])))
                 {
+                    //Create new DataElement using FactoryLocator:
+                    DataElement element = (_factoryLocator.Get<DataElement>() as IFactory<DataElement>).Create<DataElement>();
 
-                    DataElement element = new DataElement();
+                    //Intialise DataElement with Image and ImageManipulator:
                     element.Initialise(Bitmap.FromFile(Path.GetFullPath(pathfilenames[i])), _imageManipulator);
 
+                    //Add keypair of fileName string and DataElement to _imageElements: 
                     _imageElements.Add(Path.GetFileName(pathfilenames[i]), element);
 
+                    //Add fileName string to list:
                     imageNames.Add(Path.GetFileName(pathfilenames[i]));
                 }
 
 
             }
 
-            //We return the full list of keys, that we can loop through to get the file names
+            //Return the full list of keys, that can be looped through to get the file names
             return imageNames;
         }
 
@@ -160,13 +144,21 @@ namespace ImageProgram
         /// <param name="frameHeight">the height (in pixles) of the 'frame' it is to occupy</param>
         /// <returns>the Image pointed identified by key</returns>
         public Image getImage(String key, int frameWidth, int frameHeight) {
+
+            // Recieve image from dataElement associated with key so there is something to return and fulfill the interface:
             Image requestedImage = _imageElements[key].RetrieveImage();
+
+            // Retrieve Image from dataElement associated with key at desired Size:
             _imageElements[key].RetrieveImage(new Size(frameWidth, frameHeight));
+
             //Produce thumbnail images for large images in small frames:
             if ((frameHeight < 300 || frameWidth < 300) && (requestedImage.Width > frameWidth || requestedImage.Height > frameHeight))
             {
-
+                // Returns a thumbnail of the Image:
+                ///THIS CODE WAS TAKEN FROM https://stackoverflow.com/users/132858/russell-troywest & https://stackoverflow.com/users/3195477/stayontarget///
+                /// Link to WebPage : https://stackoverflow.com/questions/2808887/create-thumbnail-image ///
                 return requestedImage.GetThumbnailImage(frameWidth, frameHeight, ()=>false, IntPtr.Zero);
+                ///END OF CODE///
             }
 
             

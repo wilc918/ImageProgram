@@ -12,6 +12,9 @@ namespace ImageProgram
 {
     /// <summary>
     /// Facade for image processing.
+    /// 
+    /// Author (Calum Wilkinson)
+    /// Version (07/07/2022)
     /// </summary>
     class ImageManipulator : IImageManipulator
     {

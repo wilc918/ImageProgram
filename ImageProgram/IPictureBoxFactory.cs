@@ -7,6 +7,12 @@ using System.Windows.Forms;
 
 namespace ImageProgram
 {
+    /// <summary>
+    ///  Interface for enforcing PictureBoxFactory method MakePictureBox
+    ///  
+    ///  Author (Calum Wilkinson)
+    ///  Version (07/07/2022)
+    /// </summary>
     public interface IPictureBoxFactory
     {
         /// <summary>

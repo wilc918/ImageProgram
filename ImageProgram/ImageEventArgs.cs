@@ -7,7 +7,13 @@ using System.Threading.Tasks;
 
 namespace ImageProgram
 {
-    public class DisplayEventArgs : EventArgs
+    /// <summary>
+    /// Class - Provides Image value for events.
+    /// 
+    /// Author (Calum Wilkinson)
+    /// Version (07/07/2022)
+    /// </summary>
+    public class ImageEventArgs : EventArgs
     {
         /// <summary>
         /// Holds image
@@ -18,7 +24,7 @@ namespace ImageProgram
         /// Inserts image into variable.
         /// </summary>
         /// <param name="data">Image data to be held</param>
-        public DisplayEventArgs(Image data)
+        public ImageEventArgs(Image data)
         {
             this.image = data;
         }

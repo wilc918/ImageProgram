@@ -6,6 +6,12 @@ using System.Windows.Forms;
 
 namespace ImageProgram
 {
+    /// <summary>
+    /// Base class for launching the program.
+    /// 
+    /// Author (Calum Wilkinson)
+    /// Version (07/07/2022)
+    /// </summary>
     static class Program
     {
         /// <summary>

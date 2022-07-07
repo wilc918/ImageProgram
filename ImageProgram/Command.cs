@@ -6,9 +6,15 @@ using System.Threading.Tasks;
 
 namespace ImageProgram
 {
+    /// <summary>
+    ///Class - Stores and calls Actions.
+    /// 
+    /// Author (Calum Wilkinson)
+    /// Version (06/07/2022)
+    /// </summary>
     public class Command : ICommand
     {
-        //Declare an action to be executed by this command, call it _action:
+        //Declare an Action to be executed by this command, call it _action:
         private Action _action;
 
         /// <summary>
