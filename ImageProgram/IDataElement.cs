@@ -27,5 +27,24 @@ namespace ImageProgram
         /// </summary>
         /// <returns>The image.</returns>
         Image RetrieveImage();
+
+        /// <summary>
+        /// Retrieve the image, modified to size.
+        /// </summary>
+        /// <param name="size">Size of the image.</param>
+        void RetrieveImage(Size size);
+
+        /// <summary>
+        /// Flip the image ? vertically : horizontally .
+        /// </summary>
+        /// <param name="vertically">Determines whether the image is flipped vertically or horizontally.</param>
+        void FlipImage(bool vertically);
+
+        void RotateImage(int degrees);
+
+        void ChangeImage(Image image);
+
+        void SaveImage(string fileDestination);
+
     }
 }

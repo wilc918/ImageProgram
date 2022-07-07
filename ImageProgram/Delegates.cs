@@ -8,13 +8,6 @@ using System.Threading.Tasks;
 namespace ImageProgram
 {
     /// <summary>
-    /// Declare a delegate for retrieving listed of imageName, call it RetrieveImageList:
-    /// </summary>
-    /// <param name="noteKey">Note Identifier</param>
-    /// <returns>Associated note listItem</returns>
-    public delegate String RetrieveImageListDelegate(string imageName);
-
-    /// <summary>
     /// Declare a delegate for retrieving stored imagePath, call it RetrieveImage:
     /// </summary>
     /// <param name="ImageName">Name of the image to be retrieved</param>
@@ -53,4 +46,10 @@ namespace ImageProgram
     /// </summary>
     /// <param name="command">The command to be executed</param>
     public delegate void ExecuteCommandDelegate(ICommand command);
+
+    /// <summary>
+    /// Declare a delegate for creating a new DisplayView, call it CreateDisplayView:
+    /// </summary>
+    /// <param name="key"></param>
+    public delegate void CreateDisplayViewDelegate(string key);
 }

@@ -35,17 +35,19 @@ namespace ImageProgram
         }
 
         /// <summary>
-        /// Retrieves the Image stored inside of the _image attribute
+        /// Retrieves the Image stored inside of the _image attribute and returns it.
         /// </summary>
         /// <returns>Image inside of the _image attribute</returns>
         public Image RetrieveImage() 
         {
             return _image;
         }
+
         /// <summary>
-        /// Retrieve image.
+        /// RetireveImageAccording to size
         /// </summary>
-        public void RetrieveImage2(Size rqdImageSize)
+        /// <param name="rqdImageSize">Size of the image to retrieve.</param>
+        public void RetrieveImage(Size rqdImageSize)
         {
             //OnNewImageInput(_image);
             OnNewImageInput(_imageManipulator.Resize(_image, rqdImageSize));

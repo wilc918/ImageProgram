@@ -30,20 +30,13 @@ namespace ImageProgram
         // DECLARE a Dictionary<PictureBox, string> to store imagePaths in, call it _images:
         private IDictionary<PictureBox, string> _imageWithin;
 
-        // DECLARE an IDictionary to store displayViews in, call it _displayViews:
-        private IDictionary<int, DisplayView> _displayViews;
-
         // DECLARE a factory<DisplayView> to store factory in, call it _displayViewFactory:
         private IFactory<DisplayView> _displayViewFactory;
 
         // DECLARE an IPictureBoxFactory for storing a PictureBoxFactory
         private IPictureBoxFactory _pictureBoxFactory;
 
-        // DECLARE a Dictionary<string, PictureBox> to store associate images with their picturebox
-        private IImageManipulator _imageManipulator;
-
-        // DECLARE an int to store the value for the next displayView, call it _displayKey, set to 0:
-        private int _displayKey = 0;
+        private CreateDisplayViewDelegate _createDisplayView;
 
         // DECLARE an int to act as a circular counter index into _images:
         private int _cCounter = 0;
@@ -52,7 +45,7 @@ namespace ImageProgram
         /// CONSTRUCTOR - ImageCollection Form Object Constructor
         /// </summary>
         /// <param name="ImageData">Data about images</param>
-        public ImageCollection(IImageData ImageData, IImageManipulator imageManip, IDictionary<PictureBox, string> imageCollection,IPictureBoxFactory pictureBoxFactory, IFactory<DisplayView> displayViewFactory)
+        public ImageCollection(IImageData ImageData, IDictionary<PictureBox, string> imageCollection,IPictureBoxFactory pictureBoxFactory, IFactory<DisplayView> displayViewFactory, CreateDisplayViewDelegate createDisplayView)
         {
             InitializeComponent();
 
@@ -66,11 +59,9 @@ namespace ImageProgram
 
             _imageWithin = imageCollection;
 
-            _imageManipulator = imageManip;
-
-            _displayViews = new Dictionary<int, DisplayView>();
-
             _displayViewFactory = displayViewFactory;
+
+            _createDisplayView = createDisplayView;
         }
 
         #region Private Methods
@@ -127,6 +118,12 @@ namespace ImageProgram
 
             }
         }
+
+        private void AddPictureBox(PictureBox picturebox, string file) 
+        {
+            _imageWithin.Add(picturebox, file);
+        }
+
         /// <summary>
         /// Method - Removes Image and Disposes of PictureBox
         /// </summary>
@@ -196,18 +193,7 @@ namespace ImageProgram
             //If the box contains an image, create a display view initialised with the image associated with this PictureBox
             if (chosenPictureBox.Image != null)
             {
-                //DisplayView displayView = new DisplayView();
-                DisplayView displayView = _displayViewFactory.Create<DisplayView>() as DisplayView;
-                ////Initialise the display View with the image filename, a delegate for retrieving image and imageManipulator
-                //displayView.Initialise(_imageWithin[chosenPictureBox],_ModelData.getImage, _imageManipulator);
-                
-
-                (_imageData as IEventPublisher).Subscribe(_imageWithin[chosenPictureBox], displayView.OnNewInput);
-
-                displayView.Initialise(_imageWithin[chosenPictureBox], _ModelData.getImage, _imageData.RotateImage, _imageData.FlipImage, _imageData.SaveImage);
-                //Add to _displayViews and increment ready for next displayView
-                _displayViews.Add(_displayKey, displayView);
-                _displayKey++;
+                _createDisplayView(_imageWithin[chosenPictureBox]);
             }
 
         }

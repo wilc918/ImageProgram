@@ -62,6 +62,7 @@
     <Compile Include="IEventPublisher.cs" />
     <Compile Include="ICommand.cs" />
     <Compile Include="IInternalEventPublisher.cs" />
+    <Compile Include="IDisplayView.cs" />
     <Compile Include="PictureBoxFactory.cs" />
     <Compile Include="CollectionPictureBoxFactory.cs" />
     <Compile Include="collectionPictureBox.cs">

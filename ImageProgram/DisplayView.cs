@@ -16,7 +16,7 @@ namespace ImageProgram
     /// (Calum Wilkinson)
     /// (28/04/2021)
     /// </summary>
-    public partial class DisplayView : Form, IEventListener
+    public partial class DisplayView : Form, IEventListener, IDisplayView
     {
         // DECLARE an int _id, stores the ID given to this view:
         private int _id = 0;
@@ -30,6 +30,14 @@ namespace ImageProgram
 
         // DECLARE an ExecuteCommandDelegate to store the delegate used for executing commands:
         private ExecuteCommandDelegate _execute;
+
+        private Action<int> _rotateImageAction;
+
+        private Action<Size> _retrieveImageAction;
+
+        private Action<bool> _flipImageAction;
+
+        private Action<string> _saveImageAction;
 
         //DECLARE an RetrieveImageDelegate to store the delegate used for retrieving images:
         private RetrieveImageDelegate _retrieveImage;
@@ -51,7 +59,7 @@ namespace ImageProgram
             this.Show();
         }
 
-        public void Initialise(string fileName, RetrieveImageDelegate retrieveImage, RotateImageDelegate rotateImage, FlipImageDelegate flipImage, SaveImageDelegate saveImage)
+        public void Initialise(string fileName, ExecuteCommandDelegate execute, Action<Size> retrieveImage2 ,RetrieveImageDelegate retrieveImage,Action<int> rotateImageAction, RotateImageDelegate rotateImage, Action<bool> flipImageAction,FlipImageDelegate flipImage, Action<string> saveImageAction ,SaveImageDelegate saveImage)
         {
             _fileName = fileName;
 
@@ -59,16 +67,32 @@ namespace ImageProgram
 
             //SET image:
             //Retrieve image according to the display size:
-            retrieveImage(_fileName, this.DisplayViewImage.Width, this.DisplayViewImage.Height);
+           // retrieveImage(_fileName, this.DisplayViewImage.Width, this.DisplayViewImage.Height);
             //SET _rotateImage to the RotateImageDelegate:
             _rotateImage = rotateImage;
             //SET _flipImage to the FlipImageDelegate:
             _flipImage = flipImage;
             //SET _saveImage to the SaveImageDelegate:
             _saveImage = saveImage;
+
+            //SET _execute to the ExecuteCommandDelegate:
+            _execute = execute;
+            //SET _rotateImageAction to Action<int> rotateImage2:
+            //_rotateImageAction += rotateImage2;
+            _retrieveImageAction = retrieveImage2;
+
+            _rotateImageAction = rotateImageAction;
+
+            _flipImageAction = flipImageAction;
+
+            _saveImageAction = saveImageAction;
+
+            ICommand summonImage = new Command<Size>(_retrieveImageAction, new Size(this.DisplayViewImage.Width, this.DisplayViewImage.Height));
+            _execute(summonImage);
+
         }
 
-        //public void Initialise(string fileName, ExecuteCommandDelegate execute, Action retrieveImage, IImageManipulator imageManip)
+        //public void Initialise(string fileName, ExecuteCommandDelegate execute, Action<Size> retrieveImage, Action<int> rotateImage, Action<bool> flipImage, Action saveImage)
         //{
         //    _fileName = fileName;
         //    _execute = execute;
@@ -88,7 +112,9 @@ namespace ImageProgram
         /// <param name="e"></param>
         private void ImageRotateRight(object sender, EventArgs e) 
         {
-            _rotateImage(_fileName, 90);
+            ICommand rotateRight = new Command<int>(_rotateImageAction, 90);
+            _execute(rotateRight);
+            //_rotateImage(_fileName, 90);
             DisplayViewImage.Refresh();
         }
         /// <summary>
@@ -98,7 +124,9 @@ namespace ImageProgram
         /// <param name="e"></param>
         private void ImageRotateLeft(object sender, EventArgs e)
         {
-            _rotateImage(_fileName, -90);
+            ICommand rotateLeft = new Command<int>(_rotateImageAction, -90);
+            _execute(rotateLeft);
+            //_rotateImage(_fileName, -90);
             DisplayViewImage.Refresh();
         }
         /// <summary>
@@ -108,7 +136,9 @@ namespace ImageProgram
         /// <param name="e"></param>
         private void ImageFlip(object sender, EventArgs e)
         {
-            _flipImage(_fileName, false);
+            ICommand flip = new Command<bool>(_flipImageAction, false);
+            _execute(flip);
+            //_flipImage(_fileName, false);
             DisplayViewImage.Refresh();
         }
         /// <summary>
@@ -128,7 +158,9 @@ namespace ImageProgram
                 {
                     int newWidth = (int)Math.Round((double)DisplayViewImage.Width * scaleAmount);
                     int newHeight = (int)Math.Round((double)DisplayViewImage.Height * scaleAmount);
-                    _retrieveImage(_fileName, newWidth, newHeight);
+                    ICommand scaleImage = new Command<Size>(_retrieveImageAction,new Size(newWidth, newHeight));
+                    _execute(scaleImage);
+                    //_retrieveImage(_fileName, newWidth, newHeight);
                 }
                 catch (Exception ex)
                 {
@@ -151,7 +183,9 @@ namespace ImageProgram
         {
             try
             {
-                _retrieveImage(_fileName, (int)WidthNumeric.Value, (int)HeightNumeric.Value);
+                ICommand resizeImage = new Command<Size>(_retrieveImageAction, new Size((int)WidthNumeric.Value, (int)HeightNumeric.Value));
+                _execute(resizeImage);
+                //_retrieveImage(_fileName, (int)WidthNumeric.Value, (int)HeightNumeric.Value);
             }
             catch (Exception ex)
             {
@@ -175,7 +209,9 @@ namespace ImageProgram
             {
                 if (dlg.FileName != "") 
                 {
-                    _saveImage(_fileName, dlg.FileName);
+                    ICommand saveImage = new Command<string>(_saveImageAction, dlg.FileName);
+                    _execute(saveImage);
+                    //_saveImage(_fileName, dlg.FileName);
                     //_imageManipulator.SaveFile(DisplayViewImage.Image, dlg.FileName);
                 }
 

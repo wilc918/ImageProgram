@@ -17,15 +17,19 @@ namespace ImageProgram
     /// </summary>
     class ImageData : IModel, IImageData, IEventPublisher
     {
-        //DECLARE a Dictionary<int,DataElement> to store images to be displayed in, call it _displayData:
+        //DECLARE a Dictionary<string, string> to store fileNames and filePaths, call it _displayData:
         private IDictionary<string, string> _displayData;
 
-        //Declare a Dictionary<int,DataElement> to store DataElements in, call it _dataElements:
+        //Declare a Dictionary<string,DataElement> to store DataElements in, call it _imageElements:
         private IDictionary<string, DataElement> _imageElements;
+
+        //DECLARE a Dictionary<PictureBox, string> to store PictureBoxes in, call it _pictureBoxes:
+        private IDictionary<string, DisplayView> _displayViews;
 
         //DECLARE an IImageManipulator to store ImageManipulator in, call it _imageMan:
         private IImageManipulator _imageManipulator;
-       
+
+        private IServiceLocator _factoryLocator;
 
         /// <summary>
         /// Constructor for objects of type ImageData
@@ -41,6 +45,13 @@ namespace ImageProgram
 
 
         #region Implementation of IImageData
+
+        public IDataElement RetrieveItem(string key)
+        {
+           return _imageElements[key];
+
+        }
+
         /// <summary>
         /// Call rotateImage on the selected item.
         /// </summary>
@@ -58,17 +69,22 @@ namespace ImageProgram
 
         public void ScaleImage(string key, int scale)
         {
-            _imageElements[key].RetrieveImage2(new Size(scale, scale));
+            _imageElements[key].RetrieveImage(new Size(scale, scale));
         }
 
         public void ResizeImage(string key, int width, int height)
         {
-            _imageElements[key].RetrieveImage2(new Size((int)width, (int)height));
+            _imageElements[key].RetrieveImage(new Size((int)width, (int)height));
         }
 
         public void SaveImage(string key, string fileDestination)
         {
             _imageElements[key].SaveImage(fileDestination);
+        }
+
+        public void AddDisplay(string fileName, DisplayView display) 
+        {
+            _displayViews.Add(fileName, display);
         }
 
         /// <summary>
@@ -97,6 +113,11 @@ namespace ImageProgram
         {
             _imageManipulator = imageManipulator;
         
+        }
+
+        public void InjectFactoryLocator(IServiceLocator factoryLocator)
+        {
+            _factoryLocator = factoryLocator;
         }
 
         #region Implementing IModel
@@ -140,7 +161,7 @@ namespace ImageProgram
         /// <returns>the Image pointed identified by key</returns>
         public Image getImage(String key, int frameWidth, int frameHeight) {
             Image requestedImage = _imageElements[key].RetrieveImage();
-            _imageElements[key].RetrieveImage2(new Size(frameWidth, frameHeight));
+            _imageElements[key].RetrieveImage(new Size(frameWidth, frameHeight));
             //Produce thumbnail images for large images in small frames:
             if ((frameHeight < 300 || frameWidth < 300) && (requestedImage.Width > frameWidth || requestedImage.Height > frameHeight))
             {

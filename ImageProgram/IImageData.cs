@@ -16,6 +16,13 @@ namespace ImageProgram
     public interface IImageData
     {
         /// <summary>
+        /// Method - Returns the image from a dataElement according to the fileName.
+        /// </summary>
+        /// <param name="filename">Name of the image file.</param>
+        /// <returns>DataElement containing the image file.</returns>
+        IDataElement RetrieveItem(string filename);
+
+        /// <summary>
         /// Method - Rotates the specified image by a specified amount.
         /// </summary>
         /// <param name="key">Image filename.</param>
@@ -62,6 +69,12 @@ namespace ImageProgram
         /// </summary>
         /// <param name="imageManipulator">ImageManipulator to inserted.</param>
         void InjectManipulator(IImageManipulator imageManipulator);
+
+        /// <summary>
+        /// Method - Inserts factoryLocator into imageData.
+        /// </summary>
+        /// <param name="factoryLocator">Allows for the production of factories.</param>
+        void InjectFactoryLocator(IServiceLocator factoryLocator);
 
     }
 }

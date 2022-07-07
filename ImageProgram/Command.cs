@@ -46,7 +46,7 @@ namespace ImageProgram
                 _value  = value;
             }
         /// <summary>
-        /// Execute the stored action:
+        /// Execute the stored action on the stored parameter:
         /// </summary>
         public void Execute() 
         {
